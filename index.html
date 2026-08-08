@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twin Cities Sound Company — Live Sound &amp; Production</title>
+<meta name="description" content="Twin Cities Sound Company provides live sound reinforcement, backline rental, and event production for venues and touring acts across the Minneapolis–St. Paul area.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #18191B;
+    --surface: #202225;
+    --line: #3A3C3E;
+    --brass: #C2915B;
+    --brass-dim: #8A6640;
+    --signal: #7FBF7F;
+    --cream: #EDE7DC;
+    --muted: #928D82;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  h1, h2, h3, .display{
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  a{ color: inherit; }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(24,25,27,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+  .brand{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .brand-mark{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+  .brand-sub{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+  nav ul li a{
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.15s ease;
+  }
+  nav ul li a:hover{ color: var(--cream); }
+  .nav-cta{
+    display: none;
+  }
+  @media (min-width: 640px){
+    .nav-cta{ display: inline-block; }
+  }
+  .btn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover{ background: var(--brass); color: var(--bg); }
+  .btn-solid{
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  .btn-solid:hover{ background: var(--brass-dim); border-color: var(--brass-dim); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 96px 0 72px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero-eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--signal);
+    letter-spacing: 0.14em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 8px var(--signal);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity: 1; }
+    50%{ opacity: 0.35; }
+  }
+  .hero h1{
+    font-size: clamp(3rem, 9vw, 6.2rem);
+    line-height: 0.94;
+    color: var(--cream);
+  }
+  .hero h1 span{ color: var(--brass); }
+  .hero-tag{
+    max-width: 46ch;
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 26px 0 36px;
+  }
+  .hero-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+
+  /* VU meter row */
+  .meter{
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 46px;
+  }
+  .meter span{
+    width: 6px;
+    background: var(--line);
+    animation: meter-bounce 1.4s ease-in-out infinite;
+  }
+  .meter span:nth-child(1){ height: 40%; animation-delay: 0s; background: var(--signal); }
+  .meter span:nth-child(2){ height: 70%; animation-delay: 0.12s; background: var(--signal); }
+  .meter span:nth-child(3){ height: 55%; animation-delay: 0.24s; background: var(--brass); }
+  .meter span:nth-child(4){ height: 90%; animation-delay: 0.36s; background: var(--brass); }
+  .meter span:nth-child(5){ height: 65%; animation-delay: 0.48s; background: var(--signal); }
+  .meter span:nth-child(6){ height: 35%; animation-delay: 0.6s; background: var(--signal); }
+  .meter span:nth-child(7){ height: 78%; animation-delay: 0.72s; background: var(--brass); }
+  .meter span:nth-child(8){ height: 50%; animation-delay: 0.84s; background: var(--signal); }
+  .meter span:nth-child(9){ height: 30%; animation-delay: 0.96s; background: var(--signal); }
+  .meter span:nth-child(10){ height: 60%; animation-delay: 1.08s; background: var(--brass); }
+  @keyframes meter-bounce{
+    0%, 100%{ transform: scaleY(0.6); opacity: 0.7; }
+    50%{ transform: scaleY(1); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .dot, .meter span{ animation: none; }
+  }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+  }
+  .section-title{
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--cream);
+    margin-bottom: 44px;
+  }
+  section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
+
+  /* ---------- CHANNEL STRIPS (services) ---------- */
+  .channels{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  @media (max-width: 900px){
+    .channels{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .channels{ grid-template-columns: 1fr; }
+  }
+  .channel{
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 22px 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--surface);
+  }
+  .channel-num{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+  }
+  .channel h3{
+    font-size: 1.5rem;
+    color: var(--cream);
+  }
+  .channel p{
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .fader{
+    width: 100%;
+    height: 64px;
+    border: 1px solid var(--line);
+    position: relative;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 7px,
+      var(--line) 7px, var(--line) 8px
+    );
+  }
+  .fader::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 10px;
+    background: var(--brass);
+    top: var(--fader-pos, 30%);
+  }
+  .channel:nth-child(1) .fader{ --fader-pos: 20%; }
+  .channel:nth-child(2) .fader{ --fader-pos: 45%; }
+  .channel:nth-child(3) .fader{ --fader-pos: 30%; }
+  .channel:nth-child(4) .fader{ --fader-pos: 55%; }
+
+  /* ---------- ABOUT / SPECS ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 800px){
+    .about-grid{ grid-template-columns: 1fr; }
+  }
+  .about-grid p{
+    color: var(--muted);
+    font-size: 1rem;
+    margin: 0 0 16px;
+  }
+  .specs{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+  }
+  .specs li{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--cream);
+  }
+  .specs li span:first-child{ color: var(--muted); }
+
+  /* ---------- ROOMS / VENUES ---------- */
+  .rooms{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 640px){
+    .rooms{ grid-template-columns: 1fr; }
+  }
+  .room-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    border-top: 1px solid var(--line);
+  }
+  .rooms .room-row:nth-child(odd){ border-right: 1px solid var(--line); }
+  @media (max-width: 640px){
+    .rooms .room-row:nth-child(odd){ border-right: none; }
+  }
+  .room-row span:first-child{ font-size: 1rem; color: var(--cream); }
+  .room-row span:last-child{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding: 72px 0 40px; }
+  .contact-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  @media (max-width: 800px){
+    .contact-grid{ grid-template-columns: 1fr; }
+  }
+  .contact-grid h2{
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  .contact-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .contact-list li{ margin-bottom: 18px; }
+  .contact-list .label{
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .contact-list a{
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: var(--brass);
+    border-bottom: 1px solid transparent;
+  }
+  .contact-list a:hover{ border-bottom-color: var(--brass); }
+
+  .foot-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="brand-mark">TCSC</span>
+      <span class="brand-sub mono">TWIN CITIES SOUND CO.</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#venues">Venues</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="btn nav-cta">Book a Date</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap" style="border-bottom:1px solid var(--line);">
+    <div class="hero-eyebrow"><span class="dot"></span> LIVE &amp; ON THE BOARD — MINNEAPOLIS / ST. PAUL</div>
+    <h1>TWIN CITIES<br><span>SOUND CO.</span></h1>
+    <p class="hero-tag">Front-of-house sound, backline, and show production for venues, festivals, and touring acts across the Twin Cities. We show up early, mix clean, and strike quiet.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-solid">Book a Date</a>
+      <a href="#services" class="btn">See What We Run</a>
+    </div>
+    <div class="meter" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <section id="services" class="wrap">
+    <div class="section-label mono">01 / SERVICES</div>
+    <h2 class="section-title">What we run</h2>
+  </section>
+  <div class="channels">
+    <div class="channel">
+      <span class="channel-num mono">CH.01</span>
+      <h3>Live Sound Reinforcement</h3>
+      <p>Full front-of-house and monitor engineering for club shows, festival stages, and one-off events. We tune the room, not just the board.</p>
+      <div class="fader" aria-hidden="true"></div>
+    </div>
+    <div class="channel">
+      <span class="channel-num mono">CH.02</span>
+      <h3>Backline &amp; Gear Rental</h3>
+      <p>Amps, drums, DI's, and monitor wedges available by the day or the run. Well-maintained gear, delivered and set before load-in.</p>
+      <div class="fader" aria-hidden="true"></div>
+    </div>
+    <div class="channel">
+      <span class="channel-num mono">CH.03</span>
+      <h3>Event Production</h3>
+      <p>Sound design and day-of coordination for weddings, corporate events, and private shows — from a single acoustic set to a full stage.</p>
+      <div class="fader" aria-hidden="true"></div>
+    </div>
+    <div class="channel">
+      <span class="channel-num mono">CH.04</span>
+      <h3>Artist &amp; Tour Support</h3>
+      <p>Advance calls, stage plots, and a local crew that knows the rooms. Built for touring acts routing through the Twin Cities.</p>
+      <div class="fader" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section id="about" class="wrap">
+    <div class="section-label mono">02 / ABOUT</div>
+    <h2 class="section-title">Run by people who've been on stage too</h2>
+    <div class="about-grid">
+      <div>
+        <p>Twin Cities Sound Company was started by working musicians and engineers who got tired of bad monitors and worse advance calls. We build every show the way we'd want it built if we were the ones walking out to play it.</p>
+        <p>We work directly with venues, promoters, and bands to keep load-in simple and the mix honest — whether that's a 200-cap room on a Tuesday or a two-day outdoor festival.</p>
+        <a href="#contact" class="btn">Get in Touch</a>
+      </div>
+      <ul class="specs">
+        <li><span>Coverage area</span><span>Twin Cities metro</span></li>
+        <li><span>Typical room size</span><span>150–2,500 cap</span></li>
+        <li><span>Booking window</span><span>Day rate / multi-day</span></li>
+        <li><span>Crew</span><span>FOH + monitors + tech</span></li>
+        <li><span>Load-in turnaround</span><span>Same-day available</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="venues" class="wrap" style="padding-bottom: 40px;">
+    <div class="section-label mono">03 / VENUES</div>
+    <h2 class="section-title">Rooms we've run sound in</h2>
+  </section>
+  <div class="rooms">
+    <div class="room-row"><span>Independent clubs &amp; listening rooms</span><span class="mono">200–600 CAP</span></div>
+    <div class="room-row"><span>Breweries &amp; taproom stages</span><span class="mono">150–400 CAP</span></div>
+    <div class="room-row"><span>Outdoor &amp; festival stages</span><span class="mono">MULTI-DAY</span></div>
+    <div class="room-row"><span>Private &amp; corporate events</span><span class="mono">ON REQUEST</span></div>
+  </div>
+
+  <footer id="contact" class="wrap">
+    <div class="contact-grid" style="margin-top:64px;">
+      <div>
+        <h2>Let's book<br>your date.</h2>
+        <p style="color:var(--muted); max-width:42ch; margin:0;">Tell us the room, the date, and what's on the stage plot — we'll take it from there.</p>
+      </div>
+      <ul class="contact-list">
+        <li>
+          <span class="label mono">EMAIL</span>
+          <a href="mailto:booking@twincitiessound.co">booking@twincitiessound.co</a>
+        </li>
+        <li>
+          <span class="label mono">PHONE</span>
+          <a href="tel:+16125550142">(612) 555-0142</a>
+        </li>
+        <li>
+          <span class="label mono">BASED IN</span>
+          <span style="font-size:1.1rem; color:var(--cream);">Twin Cities, MN</span>
+        </li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TWIN CITIES SOUND CO.</span>
+      <span>FOH · MONITORS · BACKLINE · PRODUCTION</span>
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>
