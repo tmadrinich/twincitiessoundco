@@ -56,31 +56,24 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(24,25,27,0.92);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--line);
+    background: #FFFFFF;
+    border-bottom: 1px solid #E7E3D8;
   }
   .nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 0;
+    padding: 14px 0;
   }
   .brand{
     display: flex;
-    align-items: baseline;
-    gap: 8px;
+    align-items: center;
   }
-  .brand-mark{
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.04em;
-  }
-  .brand-sub{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.12em;
+  .brand-link{ display: flex; align-items: center; }
+  .brand-logo{
+    height: 40px;
+    width: auto;
+    display: block;
   }
   nav ul{
     list-style: none;
@@ -90,17 +83,25 @@
     padding: 0;
     font-size: 0.85rem;
   }
-  nav ul li a{
+  header nav ul li a{
     text-decoration: none;
-    color: var(--muted);
+    color: #57544D;
     transition: color 0.15s ease;
   }
-  nav ul li a:hover{ color: var(--cream); }
+  header nav ul li a:hover{ color: #18191B; }
   .nav-cta{
     display: none;
   }
   @media (min-width: 640px){
     .nav-cta{ display: inline-block; }
+  }
+  header .btn{
+    border-color: #9C6F3E;
+    color: #9C6F3E;
+  }
+  header .btn:hover{
+    background: #9C6F3E;
+    color: #FFFFFF;
   }
   .btn{
     font-family: 'IBM Plex Mono', monospace;
@@ -389,23 +390,7 @@
 </head>
 <body>
 
-<header>
-  <div class="wrap nav">
-    <div class="brand">
-      <span class="brand-mark">TCSC</span>
-      <span class="brand-sub mono">TWIN CITIES SOUND CO.</span>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#venues">Venues</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-    <a href="#contact" class="btn nav-cta">Book a Date</a>
-  </div>
-</header>
+<div id="header-placeholder"></div>
 
 <main>
 
@@ -484,34 +469,23 @@
     <div class="room-row"><span>Private &amp; corporate events</span><span class="mono">ON REQUEST</span></div>
   </div>
 
-  <footer id="contact" class="wrap">
-    <div class="contact-grid" style="margin-top:64px;">
-      <div>
-        <h2>Let's book<br>your date.</h2>
-        <p style="color:var(--muted); max-width:42ch; margin:0;">Tell us the room, the date, and what's on the stage plot — we'll take it from there.</p>
-      </div>
-      <ul class="contact-list">
-        <li>
-          <span class="label mono">EMAIL</span>
-          <a href="mailto:booking@twincitiessound.co">booking@twincitiessound.co</a>
-        </li>
-        <li>
-          <span class="label mono">PHONE</span>
-          <a href="tel:+16125550142">(612) 555-0142</a>
-        </li>
-        <li>
-          <span class="label mono">BASED IN</span>
-          <span style="font-size:1.1rem; color:var(--cream);">Twin Cities, MN</span>
-        </li>
-      </ul>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 TWIN CITIES SOUND CO.</span>
-      <span>FOH · MONITORS · BACKLINE · PRODUCTION</span>
-    </div>
-  </footer>
+  <div id="footer-placeholder"></div>
 
 </main>
+
+<script>
+  async function loadPartial(placeholderId, url) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to load ' + url);
+      document.getElementById(placeholderId).outerHTML = await res.text();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  loadPartial('header-placeholder', '/partials/header.html');
+  loadPartial('footer-placeholder', '/partials/footer.html');
+</script>
 
 </body>
 </html>
