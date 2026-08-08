@@ -350,6 +350,21 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   font-size: 0.92rem;
 }
 
+.tag-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--brass);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
 /* ---------- ROOMS / VENUES ---------- */
 .rooms{
   display: grid;
