@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industry Network — Twin Cities Sound Company</title>
+<meta name="description" content="Twin Cities Sound Company's network of venues, studios, producers, and other trusted music-industry professionals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+
+  <section class="hero wrap" style="border-bottom:1px solid var(--line); padding-bottom: 48px;">
+    <div class="section-label mono">INDUSTRY NETWORK</div>
+    <h1 class="section-title" style="margin-bottom: 16px;">You're not hiring one company. You're gaining a network.</h1>
+    <p class="hero-tag">Trusted relationships across venues, studios, producers, photographers, videographers, and other music-industry professionals throughout the Twin Cities.</p>
+  </section>
+
+  <section class="wrap">
+    <!-- TODO: network categories — venues, studios, producers/engineers, photo/video, promoters -->
+    <p style="color: var(--muted);">Industry network details go here.</p>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+</main>
+
+<script>
+  async function loadPartial(placeholderId, url) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to load ' + url);
+      document.getElementById(placeholderId).outerHTML = await res.text();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  loadPartial('header-placeholder', '/partials/header.html');
+  loadPartial('footer-placeholder', '/partials/footer.html');
+</script>
+
+</body>
+</html>
