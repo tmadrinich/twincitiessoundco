@@ -45,18 +45,18 @@ header{
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E4DCD1;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 .nav{
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   padding: 14px 0;
 }
 .brand{
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 .brand-link{ display: flex; align-items: center; }
 .brand-logo{
@@ -74,23 +74,24 @@ nav ul{
 }
 header nav ul li a{
   text-decoration: none;
-  color: #57544D;
+  color: var(--muted);
   transition: color 0.15s ease;
 }
-header nav ul li a:hover{ color: #121212; }
+header nav ul li a:hover{ color: var(--cream); }
 .nav-cta{
   display: none;
+  justify-self: end;
 }
 @media (min-width: 640px){
   .nav-cta{ display: inline-block; }
 }
 header .btn{
-  border-color: #8C6239;
-  color: #8C6239;
+  border-color: var(--brass);
+  color: var(--brass);
 }
 header .btn:hover{
-  background: #8C6239;
-  color: #FFFFFF;
+  background: var(--brass);
+  color: var(--bg);
 }
 .btn{
   font-family: 'IBM Plex Mono', monospace;
