@@ -298,6 +298,26 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
 }
 .specs li span:first-child{ color: var(--muted); }
 
+.feature-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.feature-list li{
+  padding: 12px 0 12px 22px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  color: var(--cream);
+  font-size: 0.95rem;
+}
+.feature-list li:last-child{ border-bottom: none; }
+.feature-list li::before{
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--brass);
+}
+
 /* ---------- ROOMS / VENUES ---------- */
 .rooms{
   display: grid;
