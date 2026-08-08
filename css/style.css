@@ -72,23 +72,15 @@ nav ul{
   padding: 0;
   font-size: 0.85rem;
 }
-header nav ul li a,
-header .nav-right > a:not(.btn){
+header nav ul li a{
   text-decoration: none;
   color: var(--muted);
   transition: color 0.15s ease;
 }
-header nav ul li a:hover,
-header .nav-right > a:not(.btn):hover{ color: var(--cream); }
-.nav-right{
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  justify-self: end;
-  font-size: 0.85rem;
-}
+header nav ul li a:hover{ color: var(--cream); }
 .nav-cta{
   display: none;
+  justify-self: end;
 }
 @media (min-width: 640px){
   .nav-cta{ display: inline-block; }
