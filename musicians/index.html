@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musician Network — Twin Cities Sound Company</title>
+<meta name="description" content="Session and live fill-in musicians available through the Twin Cities Sound Company network.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+
+  <section class="hero wrap" style="border-bottom:1px solid var(--line); padding-bottom: 48px;">
+    <div class="section-label mono">MUSICIAN NETWORK</div>
+    <h1 class="section-title" style="margin-bottom: 16px;">Need a player? We probably know one.</h1>
+    <p class="hero-tag">A network of reliable session and live musicians available for studio work, fill-in gigs, and touring — separate from the artists we formally represent.</p>
+  </section>
+
+  <section class="wrap">
+    <!-- TODO: session work vs live work breakdown, instrument list, how to request a musician / join the network -->
+    <p style="color: var(--muted);">Musician network details go here.</p>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+</main>
+
+<script>
+  async function loadPartial(placeholderId, url) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to load ' + url);
+      document.getElementById(placeholderId).outerHTML = await res.text();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  loadPartial('header-placeholder', '/partials/header.html');
+  loadPartial('footer-placeholder', '/partials/footer.html');
+</script>
+
+</body>
+</html>
