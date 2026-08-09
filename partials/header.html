@@ -1,18 +1,23 @@
 <header>
   <div class="wrap nav">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <div class="brand">
+      <a href="/" class="brand-link">
+        <img src="/assets/tcscgold.png" alt="Twin Cities Sound Company" class="brand-logo">
+      </a>
+    </div>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </label>
     <nav>
       <ul>
         <li><a href="/artists/">Artists</a></li>
         <li><a href="/services/">Services</a></li>
         <li><a href="/musicians/">Musicians</a></li>
         <li><a href="/network/">Network</a></li>
+        <li class="nav-mobile-only"><a href="/#contact">Contact</a></li>
       </ul>
     </nav>
-    <div class="brand">
-      <a href="/" class="brand-link">
-        <img src="/assets/tcscgold.png" alt="Twin Cities Sound Company" class="brand-logo">
-      </a>
-    </div>
     <a href="/#contact" class="btn nav-cta">Contact</a>
   </div>
 </header>
