@@ -30,11 +30,11 @@
     </div>
   </section>
 
-  <section class="wrap" style="padding-top: 56px; padding-bottom: 40px;">
+  <section class="wrap fade-section" style="padding-top: 56px; padding-bottom: 40px;">
     <div class="section-label mono">START HERE</div>
     <h2 class="section-title">Find your path</h2>
   </section>
-  <div class="channels">
+  <div class="channels fade-section">
     <a href="/artists/" class="channel" style="text-decoration:none; color:inherit;">
       <span class="channel-num mono">I'M AN</span>
       <h3>Artist</h3>
@@ -61,11 +61,11 @@
     </a>
   </div>
 
-  <section id="services" class="wrap">
+  <section id="services" class="wrap fade-section">
     <div class="section-label mono">01 / WHAT WE DO</div>
     <h2 class="section-title">How we help</h2>
   </section>
-  <div class="channels">
+  <div class="channels fade-section">
     <a href="/services/" class="channel" style="text-decoration:none; color:inherit;">
       <span class="channel-num mono">CH.01</span>
       <h3>Representation &amp; Booking</h3>
@@ -92,7 +92,7 @@
     </a>
   </div>
 
-  <section id="about" class="wrap">
+  <section id="about" class="wrap fade-section">
     <div class="section-label mono">02 / ABOUT</div>
     <h2 class="section-title">Run by people who've been on stage too</h2>
     <div class="about-grid">
@@ -111,11 +111,11 @@
     </div>
   </section>
 
-  <section id="venues" class="wrap" style="padding-bottom: 40px;">
+  <section id="venues" class="wrap fade-section" style="padding-bottom: 40px;">
     <div class="section-label mono">03 / INDUSTRY NETWORK</div>
     <h2 class="section-title">You're not hiring one company. You're gaining a network.</h2>
   </section>
-  <div class="rooms">
+  <div class="rooms fade-section">
     <a href="/network/" class="room-row" style="text-decoration:none;"><span>Venues &amp; promoters</span><span class="mono">TWIN CITIES</span></a>
     <a href="/network/" class="room-row" style="text-decoration:none;"><span>Recording studios &amp; producers</span><span class="mono">TRUSTED</span></a>
     <a href="/network/" class="room-row" style="text-decoration:none;"><span>Photographers &amp; videographers</span><span class="mono">ON CALL</span></a>
@@ -126,19 +126,7 @@
 
 </main>
 
-<script>
-  async function loadPartial(placeholderId, url) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed to load ' + url);
-      document.getElementById(placeholderId).outerHTML = await res.text();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  loadPartial('header-placeholder', '/partials/header.html');
-  loadPartial('footer-placeholder', '/partials/footer.html');
-</script>
+<script src="/js/main.js" defer></script>
 
 </body>
 </html>
