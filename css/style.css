@@ -57,6 +57,7 @@ header{
 .brand{
   display: flex;
   justify-content: center;
+  order: 2;
 }
 .brand-link{ display: flex; align-items: center; }
 .brand-logo{
@@ -64,6 +65,7 @@ header{
   width: auto;
   display: block;
 }
+nav{ order: 1; }
 nav ul{
   list-style: none;
   display: flex;
@@ -79,11 +81,73 @@ header nav ul li a{
 }
 header nav ul li a:hover{ color: var(--cream); }
 .nav-cta{
-  display: none;
+  order: 3;
   justify-self: end;
 }
-@media (min-width: 640px){
-  .nav-cta{ display: inline-block; }
+.nav-mobile-only{ display: none; }
+
+/* ---------- MOBILE NAV (hamburger) ---------- */
+.nav-toggle{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-toggle-label{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 26px;
+  height: 22px;
+  cursor: pointer;
+}
+.nav-toggle-label span{
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--cream);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle:checked ~ .nav-toggle-label span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle:checked ~ .nav-toggle-label span:nth-child(2){ opacity: 0; }
+.nav-toggle:checked ~ .nav-toggle-label span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 800px){
+  .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+  .brand{ order: 1; justify-content: flex-start; }
+  .nav-toggle-label{ display: flex; order: 2; }
+  .nav-cta{ display: none; }
+  .nav-mobile-only{ display: block; }
+
+  nav{
+    position: absolute;
+    top: 100%;
+    left: -28px;
+    right: -28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .nav-toggle:checked ~ nav{ max-height: 340px; }
+  nav ul{
+    flex-direction: column;
+    gap: 0;
+    padding: 4px 28px 12px;
+  }
+  nav ul li{ border-bottom: 1px solid var(--line); }
+  nav ul li:last-child{ border-bottom: none; }
+  header nav ul li a{
+    display: block;
+    padding: 16px 4px;
+    font-size: 0.95rem;
+  }
 }
 header .btn{
   border-color: var(--brass);
@@ -442,4 +506,30 @@ footer{ padding: 72px 0 40px; }
   font-size: 0.72rem;
   color: var(--muted);
   letter-spacing: 0.06em;
+}
+
+/* ---------- MOBILE POLISH ---------- */
+@media (max-width: 640px){
+  .wrap{ padding: 0 20px; }
+
+  .hero{ padding: 48px 0 40px; }
+  .hero-tag{ font-size: 0.98rem; }
+
+  section{ padding: 48px 0; }
+  .section-title{ margin-bottom: 28px; }
+
+  footer{ padding: 48px 0 28px; }
+  .contact-grid{ margin-top: 40px !important; margin-bottom: 40px; }
+
+  /* Bigger tap targets on small screens */
+  .btn{
+    padding: 13px 20px;
+    font-size: 0.82rem;
+  }
+  .channel, .artist-card, .room-row{
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .foot-bottom{ flex-direction: column; align-items: flex-start; }
 }
