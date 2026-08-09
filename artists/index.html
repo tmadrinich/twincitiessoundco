@@ -22,12 +22,12 @@
     <p class="hero-tag">Original artists, cover bands, and working musicians we handle booking, branding, and career development for across the Twin Cities and Midwest.</p>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fade-section">
     <div class="section-label mono">01 / REPRESENTED ARTISTS</div>
     <h2 class="section-title">Full-service representation</h2>
   </section>
-  <section class="wrap">
-    <div class="artist-grid">
+  <section class="wrap fade-section">
+    <div class="artist-grid fade-section">
       <div class="artist-card">
         <div>
           <span class="artist-tag mono">COVER BAND</span>
@@ -59,16 +59,16 @@
     </div>
   </section>
 
-  <section class="wrap" style="padding-bottom: 40px;">
+  <section class="wrap fade-section" style="padding-bottom: 40px;">
     <div class="section-label mono">02 / ARTISTS WE'VE SUPPORTED</div>
     <h2 class="section-title">Not every artist needs full representation</h2>
   </section>
-  <div class="rooms">
+  <div class="rooms fade-section">
     <a href="https://angelval.com" class="room-row" style="text-decoration:none;" target="_blank" rel="noopener"><span>Angel Val</span><span class="mono">STUDIO SUPPORT</span></a>
     <a href="https://sarahholdyn.com" class="room-row" style="text-decoration:none;" target="_blank" rel="noopener"><span>Sarah Holdyn</span><span class="mono">LIVE SUPPORT</span></a>
   </div>
 
-  <section class="wrap" style="text-align: center; padding-top: 56px;">
+  <section class="wrap fade-section" style="text-align: center; padding-top: 56px;">
     <p class="section-label mono" style="margin-bottom: 20px;">WANT TO WORK WITH US?</p>
     <a href="/#contact" class="btn btn-solid">Get in Touch</a>
   </section>
@@ -77,19 +77,7 @@
 
 </main>
 
-<script>
-  async function loadPartial(placeholderId, url) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed to load ' + url);
-      document.getElementById(placeholderId).outerHTML = await res.text();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  loadPartial('header-placeholder', '/partials/header.html');
-  loadPartial('footer-placeholder', '/partials/footer.html');
-</script>
+<script src="/js/main.js" defer></script>
 
 </body>
 </html>
