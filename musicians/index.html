@@ -22,11 +22,11 @@
     <p class="hero-tag">A network of reliable session and live musicians available for studio work, fill-in gigs, and touring — separate from the artists we formally represent.</p>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fade-section">
     <div class="section-label mono">THE NETWORK</div>
     <h2 class="section-title">Session &amp; live musicians</h2>
   </section>
-  <div class="channels">
+  <div class="channels fade-section">
     <div class="channel">
       <h3>Taylor Madrinich</h3>
       <div class="tag-row">
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <section class="wrap" style="text-align: center; padding-top: 56px;">
+  <section class="wrap fade-section" style="text-align: center; padding-top: 56px;">
     <p class="section-label mono" style="margin-bottom: 20px;">NEED A PLAYER FOR A SESSION OR A SHOW?</p>
     <a href="/#contact" class="btn btn-solid">Get in Touch</a>
   </section>
@@ -70,19 +70,7 @@
 
 </main>
 
-<script>
-  async function loadPartial(placeholderId, url) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed to load ' + url);
-      document.getElementById(placeholderId).outerHTML = await res.text();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  loadPartial('header-placeholder', '/partials/header.html');
-  loadPartial('footer-placeholder', '/partials/footer.html');
-</script>
+<script src="/js/main.js" defer></script>
 
 </body>
 </html>
