@@ -22,7 +22,7 @@
     <p class="hero-tag">Representation, brand and digital support, and a recording network — customized to what each artist actually needs.</p>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fade-section">
     <div class="about-grid">
       <div>
         <div class="section-label mono">01 / REPRESENTATION</div>
@@ -40,7 +40,7 @@
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap fade-section">
     <div class="about-grid">
       <div>
         <div class="section-label mono">02 / BRAND &amp; DIGITAL</div>
@@ -58,7 +58,7 @@
     </div>
   </section>
 
-  <section class="wrap" style="border-bottom: none;">
+  <section class="wrap fade-section" style="border-bottom: none;">
     <div class="about-grid">
       <div>
         <div class="section-label mono">03 / RECORDING NETWORK</div>
@@ -75,7 +75,7 @@
     </div>
   </section>
 
-  <section class="wrap" style="text-align: center; padding-top: 0;">
+  <section class="wrap fade-section" style="text-align: center; padding-top: 0;">
     <p class="section-label mono" style="margin-bottom: 20px;">NOT SURE WHAT YOU NEED?</p>
     <a href="/#contact" class="btn btn-solid">Let's Talk</a>
   </section>
@@ -84,19 +84,7 @@
 
 </main>
 
-<script>
-  async function loadPartial(placeholderId, url) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed to load ' + url);
-      document.getElementById(placeholderId).outerHTML = await res.text();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  loadPartial('header-placeholder', '/partials/header.html');
-  loadPartial('footer-placeholder', '/partials/footer.html');
-</script>
+<script src="/js/main.js" defer></script>
 
 </body>
 </html>
