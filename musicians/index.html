@@ -26,9 +26,15 @@
 
   <section class="wrap fade-section">
     <div class="section-label mono">THE NETWORK</div>
-    <h2 class="section-title">Session &amp; live musicians</h2>
+    <h2 class="section-title" style="margin-bottom: 24px;">Session &amp; live musicians</h2>
+    <input
+      type="search"
+      id="musician-search"
+      class="search-input"
+      placeholder="Search by name or instrument…"
+      aria-label="Search musicians">
   </section>
-  <div class="channels fade-section">
+  <div class="channels fade-section" id="musician-grid">
     <div class="channel">
       <h3>Taylor Madrinich</h3>
       <div class="tag-row">
@@ -62,6 +68,7 @@
       </div>
     </div>
   </div>
+  <p id="musician-search-empty" class="wrap mono" style="display:none; color: var(--muted); padding: 8px 0 32px;">No musicians match that search.</p>
 
   <section class="wrap fade-section" style="text-align: center; padding-top: 56px;">
     <p class="section-label mono" style="margin-bottom: 20px;">NEED A PLAYER FOR A SESSION OR A SHOW?</p>
