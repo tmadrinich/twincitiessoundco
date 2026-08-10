@@ -32,3 +32,26 @@ loadPartial('footer-placeholder', '/partials/footer.html');
 
   sections.forEach(function (el) { observer.observe(el); });
 })();
+
+// ---------- Musician search filter (only runs if the search box exists) ----------
+(function () {
+  var input = document.getElementById('musician-search');
+  var grid = document.getElementById('musician-grid');
+  if (!input || !grid) return;
+
+  var cards = grid.querySelectorAll('.channel');
+  var emptyMsg = document.getElementById('musician-search-empty');
+
+  input.addEventListener('input', function () {
+    var term = input.value.trim().toLowerCase();
+    var visibleCount = 0;
+
+    cards.forEach(function (card) {
+      var match = card.textContent.toLowerCase().indexOf(term) !== -1;
+      card.style.display = match ? '' : 'none';
+      if (match) visibleCount++;
+    });
+
+    if (emptyMsg) emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+})();
