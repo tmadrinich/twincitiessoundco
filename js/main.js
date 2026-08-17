@@ -142,6 +142,78 @@ document.addEventListener('DOMContentLoaded', function () {
     return items;
   }
 
+  // ---------- Payout split (dynamic rows) ----------
+  var payeesList = document.getElementById('payees-list');
+  var addPayeeBtn = document.getElementById('add-payee');
+  var splitEvenlyBtn = document.getElementById('split-evenly');
+  var payeeWarning = document.getElementById('payee-split-warning');
+
+  function addPayeeRow(name, percentage) {
+    var row = document.createElement('div');
+    row.className = 'payee-row';
+    row.innerHTML =
+      '<input type="text" class="payee-name" placeholder="Name">' +
+      '<input type="number" class="payee-pct" placeholder="%" min="0" max="100" step="0.1" value="' +
+      (percentage || '') + '">' +
+      '<span class="payee-amount">$0.00</span>' +
+      '<button type="button" class="remove-row-btn" aria-label="Remove">×</button>';
+
+    row.querySelector('.payee-name').value = name || '';
+
+    row.querySelector('.remove-row-btn').addEventListener('click', function () {
+      row.remove();
+      recalculate();
+    });
+    row.querySelectorAll('input').forEach(function (input) {
+      input.addEventListener('input', recalculate);
+    });
+
+    payeesList.appendChild(row);
+  }
+
+  addPayeeBtn.addEventListener('click', function () { addPayeeRow('', ''); recalculate(); });
+  splitEvenlyBtn.addEventListener('click', function () {
+    var rows = payeesList.querySelectorAll('.payee-row');
+    if (rows.length === 0) return;
+    var each = 100 / rows.length;
+    rows.forEach(function (row, i) {
+      // last row absorbs any rounding remainder so it totals exactly 100
+      var pct = (i === rows.length - 1)
+        ? 100 - Math.round(each * 100) / 100 * (rows.length - 1)
+        : Math.round(each * 100) / 100;
+      row.querySelector('.payee-pct').value = pct;
+    });
+    recalculate();
+  });
+  addPayeeRow('', ''); // start with one empty row
+
+  function getPayees(totalDue) {
+    var rows = payeesList.querySelectorAll('.payee-row');
+    var items = [];
+    var pctSum = 0;
+    rows.forEach(function (row) {
+      var name = row.querySelector('.payee-name').value.trim();
+      var pct = parseFloat(row.querySelector('.payee-pct').value);
+      if (!isFinite(pct)) pct = 0;
+      var amount = totalDue * (pct / 100);
+      row.querySelector('.payee-amount').textContent = money(amount);
+      if (name || pct) {
+        items.push({ name: name, percentage: pct, amount: amount });
+        pctSum += pct;
+      }
+    });
+
+    if (items.length > 0 && Math.abs(pctSum - 100) > 0.5) {
+      payeeWarning.style.display = 'block';
+      payeeWarning.className = 'status-message error';
+      payeeWarning.textContent = 'Splits total ' + pctSum.toFixed(1) + '% — should add up to 100%.';
+    } else {
+      payeeWarning.style.display = 'none';
+    }
+
+    return items;
+  }
+
   // ---------- Live calculation ----------
   function recalculate() {
     var dealType = form.querySelector('input[name="deal_type"]:checked').value;
@@ -168,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var totalDue = totalEarned - totalDeductions + merchNet - depositPaid;
 
+    var payees = getPayees(totalDue);
+
     document.getElementById('sum-earned').textContent = money(totalEarned);
     document.getElementById('sum-deductions').textContent = '–' + money(totalDeductions);
     document.getElementById('sum-merch').textContent = '+' + money(merchNet);
@@ -178,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
       dealType: dealType, guaranteeAmt: guaranteeAmt, grossRevenue: grossRevenue,
       totalEarned: totalEarned, deductions: deductions, totalDeductions: totalDeductions,
       merchGross: merchGross, merchVenuePct: merchVenuePct, merchNet: merchNet,
-      depositPaid: depositPaid, totalDue: totalDue
+      depositPaid: depositPaid, totalDue: totalDue, payees: payees
     };
   }
 
@@ -221,6 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       deductions: totals.deductions,
       total_deductions: totals.totalDeductions,
+
+      payees: totals.payees,
 
       merch_gross: totals.merchGross,
       merch_venue_percentage: totals.merchVenuePct,
