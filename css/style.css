@@ -89,7 +89,7 @@ header{
 }
 .brand-link{ display: flex; align-items: center; }
 .brand-logo{
-  height: 80px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -678,6 +678,23 @@ footer{ padding: 72px 0 40px; }
   line-height: 1;
 }
 .remove-row-btn:hover{ border-color: var(--brass); color: var(--brass); }
+
+.payee-row{
+  display: grid;
+  grid-template-columns: 1fr 90px 120px 40px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+@media (max-width: 560px){
+  .payee-row{ grid-template-columns: 1fr 70px 90px 32px; }
+}
+.payee-amount{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.92rem;
+  color: var(--brass);
+  text-align: right;
+}
 
 .summary-box{
   border: 1px solid var(--brass);
