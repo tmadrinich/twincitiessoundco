@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Show Settlement — Twin Cities Sound Company</title>
+<meta name="description" content="End-of-night show settlement tool for Twin Cities Sound Company artists and shows.">
+<link rel="icon" type="image/png" href="/assets/tcscgold.png">
+<link rel="apple-touch-icon" href="/assets/tcscgold.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+
+  <section class="hero wrap" style="border-bottom:1px solid var(--line); padding-bottom: 48px;">
+    <div class="section-label mono">SETTLEMENT</div>
+    <h1 class="section-title" style="margin-bottom: 16px;">End-of-night settlement</h1>
+    <p class="hero-tag">Works for a flat-guarantee bar gig or a full door-split touring show. Pick a deal type below, fill in what applies, and the total updates as you go.</p>
+  </section>
+
+  <form id="settlement-form">
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">01 / SHOW &amp; PARTY INFO</div>
+      <h2 class="section-title">Who, where, when</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="venue_name">Venue</label>
+          <input type="text" id="venue_name" name="venue_name" required>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city">
+        </div>
+        <div class="field">
+          <label for="show_date">Show date</label>
+          <input type="date" id="show_date" name="show_date" required>
+        </div>
+        <div class="field">
+          <label for="artist_name">Artist / band</label>
+          <input type="text" id="artist_name" name="artist_name" required>
+        </div>
+        <div class="field">
+          <label for="promoter_name">Promoter / venue contact</label>
+          <input type="text" id="promoter_name" name="promoter_name">
+        </div>
+        <div class="field">
+          <label for="capacity">Room capacity</label>
+          <input type="number" id="capacity" name="capacity" min="0">
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">02 / DEAL TYPE</div>
+      <h2 class="section-title" style="margin-bottom: 20px;">How this show is structured</h2>
+      <div class="deal-type-group">
+        <div class="deal-type-option">
+          <input type="radio" id="deal_guarantee" name="deal_type" value="guarantee" checked>
+          <label for="deal_guarantee">Flat guarantee</label>
+        </div>
+        <div class="deal-type-option">
+          <input type="radio" id="deal_door" name="deal_type" value="door_split">
+          <label for="deal_door">Straight door split</label>
+        </div>
+        <div class="deal-type-option">
+          <input type="radio" id="deal_versus" name="deal_type" value="versus">
+          <label for="deal_versus">Guarantee vs. percentage</label>
+        </div>
+      </div>
+
+      <!-- Guarantee amount: guarantee + versus -->
+      <div class="conditional-block" data-shows-for="guarantee,versus">
+        <div class="form-grid">
+          <div class="field">
+            <label for="guarantee_amount">Guarantee amount ($)</label>
+            <input type="number" id="guarantee_amount" name="guarantee_amount" step="0.01" min="0" value="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- Box office + split: door_split + versus -->
+      <div class="conditional-block" data-shows-for="door_split,versus">
+        <div class="form-grid-3">
+          <div class="field">
+            <label for="ticket_price">Ticket price ($)</label>
+            <input type="number" id="ticket_price" name="ticket_price" step="0.01" min="0" value="0">
+          </div>
+          <div class="field">
+            <label for="tickets_sold">Tickets sold</label>
+            <input type="number" id="tickets_sold" name="tickets_sold" min="0" value="0">
+          </div>
+          <div class="field">
+            <label for="comps_issued">Comps issued</label>
+            <input type="number" id="comps_issued" name="comps_issued" min="0" value="0">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="artist_percentage">Artist % of door</label>
+            <input type="number" id="artist_percentage" name="artist_percentage" min="0" max="100" value="80">
+          </div>
+          <div class="field">
+            <label for="venue_percentage">Venue % of door</label>
+            <input type="number" id="venue_percentage" name="venue_percentage" min="0" max="100" value="20" readonly>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">03 / DEDUCTIONS</div>
+      <h2 class="section-title" style="margin-bottom: 20px;">Costs coming off the top</h2>
+      <div id="deductions-list"></div>
+      <button type="button" id="add-deduction" class="btn">+ Add Deduction</button>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">04 / MERCHANDISE</div>
+      <h2 class="section-title" style="margin-bottom: 20px;">Merch settlement</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="merch_gross">Merch gross sales ($)</label>
+          <input type="number" id="merch_gross" name="merch_gross" step="0.01" min="0" value="0">
+        </div>
+        <div class="field">
+          <label for="merch_venue_percentage">Venue merch cut (%)</label>
+          <input type="number" id="merch_venue_percentage" name="merch_venue_percentage" min="0" max="100" value="0">
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">05 / FINAL SETTLEMENT</div>
+      <h2 class="section-title" style="margin-bottom: 20px;">The number that matters</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="deposit_paid">Deposit already paid ($)</label>
+          <input type="number" id="deposit_paid" name="deposit_paid" step="0.01" min="0" value="0">
+        </div>
+        <div class="field">
+          <label for="payment_method">Payment method</label>
+          <select id="payment_method" name="payment_method">
+            <option value="Cash">Cash</option>
+            <option value="Check">Check</option>
+            <option value="Venmo">Venmo</option>
+            <option value="Zelle">Zelle</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-row"><span>Total earned</span><span id="sum-earned">$0.00</span></div>
+        <div class="summary-row"><span>Deductions</span><span id="sum-deductions">–$0.00</span></div>
+        <div class="summary-row"><span>Merch net to artist</span><span id="sum-merch">+$0.00</span></div>
+        <div class="summary-row"><span>Deposit already paid</span><span id="sum-deposit">–$0.00</span></div>
+        <div class="summary-total">
+          <span class="label">TOTAL DUE TONIGHT</span>
+          <span class="amount" id="sum-total">$0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">06 / SIGN-OFF</div>
+      <h2 class="section-title" style="margin-bottom: 20px;">Sign &amp; save</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="promoter_signature_name">Promoter signature (printed name)</label>
+          <input type="text" id="promoter_signature_name" name="promoter_signature_name">
+        </div>
+        <div class="field">
+          <label for="artist_signature_name">Artist rep signature (printed name)</label>
+          <input type="text" id="artist_signature_name" name="artist_signature_name">
+        </div>
+      </div>
+      <div class="field">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" placeholder="Anything unusual about tonight's settlement…"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-solid" id="save-settlement">Save Settlement</button>
+      <div id="save-status" class="status-message"></div>
+    </section>
+
+  </form>
+
+  <section class="wrap fade-section" style="padding-bottom: 40px;">
+    <div class="section-label mono">07 / PAST SETTLEMENTS</div>
+    <h2 class="section-title" style="margin-bottom: 8px;">Recent entries</h2>
+    <div id="past-settlements">
+      <p class="status-message" style="color: var(--muted);">Loading…</p>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/main.js" defer></script>
+<script src="/js/settlement.js" defer></script>
+
+</body>
+</html>
