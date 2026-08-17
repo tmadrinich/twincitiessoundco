@@ -170,7 +170,19 @@
     </section>
 
     <section class="wrap fade-section">
-      <div class="section-label mono">06 / SIGN-OFF</div>
+      <div class="section-label mono">06 / PAYOUT SPLIT</div>
+      <h2 class="section-title" style="margin-bottom: 8px;">Who's getting paid tonight</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin: 0 0 20px;">Splits the Total Due Tonight figure above across band members. Doesn't have to be even — adjust percentages as needed.</p>
+      <div id="payees-list"></div>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+        <button type="button" id="add-payee" class="btn">+ Add Member</button>
+        <button type="button" id="split-evenly" class="btn">Split Evenly</button>
+      </div>
+      <p id="payee-split-warning" class="status-message" style="display:none; margin-top: 12px;"></p>
+    </section>
+
+    <section class="wrap fade-section">
+      <div class="section-label mono">07 / SIGN-OFF</div>
       <h2 class="section-title" style="margin-bottom: 20px;">Sign &amp; save</h2>
       <div class="form-grid">
         <div class="field">
@@ -194,7 +206,7 @@
   </form>
 
   <section class="wrap fade-section" style="padding-bottom: 40px;">
-    <div class="section-label mono">07 / PAST SETTLEMENTS</div>
+    <div class="section-label mono">08 / PAST SETTLEMENTS</div>
     <h2 class="section-title" style="margin-bottom: 8px;">Recent entries</h2>
     <div id="past-settlements">
       <p class="status-message" style="color: var(--muted);">Loading…</p>
