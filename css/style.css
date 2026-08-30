@@ -68,6 +68,11 @@ a:focus-visible, button:focus-visible{
   padding: 0 28px;
 }
 
+/* Keep anchor-linked targets from landing underneath the sticky header */
+[id]{
+  scroll-margin-top: 100px;
+}
+
 /* ---------- NAV ---------- */
 header{
   position: sticky;
@@ -472,6 +477,43 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
 }
 .search-input::placeholder{ color: var(--muted); }
 .search-input:focus{ border-color: var(--brass); }
+
+.filter-pills{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filter-pill{
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.filter-pill:hover{ color: var(--cream); }
+.filter-pill.is-active{
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.filter-group{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.filter-group-label{
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  min-width: 44px;
+}
 
 /* ---------- ROOMS / VENUES ---------- */
 .rooms{
