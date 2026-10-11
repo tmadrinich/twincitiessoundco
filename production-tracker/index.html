@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-require-auth>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Production Tracker — Twin Cities Sound Company</title>
+<link rel="icon" type="image/png" href="/assets/tcsc-icon.png">
+<link rel="apple-touch-icon" href="/assets/tcsc-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  /* Tracker-only styles. Colors, type and buttons come from /css/style.css (2026 brand guide). */
+  :root{ --alert: #C0645A; }
+  .tk-main{ padding: 56px 0 88px; border-bottom: 1px solid var(--line); }
+  .tk-wrap{ max-width: 816px; } /* 760px content + .wrap gutters */
+
+  /* labels / small caps: Archivo SemiBold, wide tracking */
+  .tk-label, .tk-back, .tk-field label, .tk-stat .l, .tk-badge, .tk-pill, .tk-linkbtn,
+  .tk-project .foot span, .tk-msg{
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tk-title{ font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--cream); }
+  .tk-sub{ color: var(--muted); margin: 10px 0 32px; }
+  .tk-back{ display: inline-block; margin-bottom: 20px; font-size: 0.72rem; color: var(--muted); text-decoration: none; }
+  .tk-back:hover{ color: var(--cream); }
+  .tk-h2{ font-size: 1.6rem; color: var(--cream); margin-bottom: 16px; }
+
+  .tk-panel{ border: 1px solid var(--line); background: var(--surface); padding: 24px; margin-bottom: 20px; }
+  .tk-panel-head{ display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+  .tk-field{ display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .tk-field label{ font-size: 0.68rem; color: var(--muted); }
+  .tk-field input{
+    background: var(--bg); border: 1px solid var(--line); color: var(--cream);
+    font-family: var(--font-body); font-size: 16px; font-variant-numeric: tabular-nums;
+    padding: 10px 12px; border-radius: 4px; width: 100%; min-width: 0; color-scheme: dark;
+  }
+  .tk-field input:focus{ border-color: var(--signal); outline: none; }
+  .tk-field input:focus-visible{ outline: 2px solid var(--signal); outline-offset: 2px; }
+  .tk-grid-2{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tk-grid-3{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .tk-span{ grid-column: 1 / -1; }
+
+  .tk-stats{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 14px; }
+  .tk-stat .n{ font-family: var(--font-display); font-size: 2.2rem; line-height: 1.05; color: var(--cream); font-variant-numeric: tabular-nums; }
+  .tk-stat .l{ font-size: 0.64rem; color: var(--muted); margin-top: 6px; }
+  .tk-bar{ height: 6px; background: var(--line); overflow: hidden; }
+  .tk-bar > div{ height: 100%; width: 0; background: var(--brass); transition: width 0.3s ease; }
+  .tk-bar > div.over{ background: var(--alert); }
+
+  .tk-badge{ font-size: 0.66rem; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--signal); color: var(--signal); white-space: nowrap; }
+  .tk-badge.over{ border-color: var(--alert); color: var(--alert); }
+
+  .tk-project{
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); color: inherit;
+    padding: 22px 24px; margin-bottom: 12px; font: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .tk-project:hover{ border-color: var(--signal); }
+  .tk-project h3{ font-size: 1.7rem; color: var(--cream); }
+  .tk-project .meta{ color: var(--muted); font-size: 0.92rem; margin: 4px 0 14px; }
+  .tk-project .foot{ display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .tk-project .foot span{ font-size: 0.68rem; color: var(--muted); }
+
+  .tk-session{ border: 1px solid var(--line); background: var(--surface); padding: 20px 22px; margin-bottom: 10px; }
+  .tk-session-head{ display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .tk-session-head h3{ font-size: 1.4rem; color: var(--cream); }
+  .tk-pill{
+    font-size: 0.66rem; padding: 6px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    background: transparent; border: 1px solid var(--line); color: var(--muted);
+  }
+  .tk-pill.scheduled{ border-color: var(--signal); color: var(--signal); }
+  .tk-pill.done{ border-color: var(--brass); background: var(--brass); color: var(--cream); }
+  .tk-linkbtn{ background: none; border: 0; padding: 12px 0 0; cursor: pointer; font-size: 0.66rem; color: var(--muted); }
+  .tk-linkbtn:hover{ color: var(--alert); }
+
+  .tk-add{ display: flex; gap: 10px; margin-top: 16px; }
+  .tk-add .tk-field{ flex: 1; }
+
+  .tk-msg{ font-size: 0.72rem; padding: 10px 0; color: var(--muted); }
+  .tk-msg.error{ color: var(--alert); }
+  .tk-empty{ color: var(--muted); padding: 24px 0; }
+
+  @media (max-width: 560px){
+    .tk-main{ padding: 40px 0 64px; }
+    .tk-panel, .tk-project, .tk-session{ padding: 18px; }
+    .tk-stat .n{ font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+  <div class="tk-main">
+    <div class="wrap tk-wrap" id="app"></div>
+  </div>
+  <div id="footer-placeholder"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  var STATUSES = ['todo', 'scheduled', 'done'];
+  var LABELS = { todo: 'To do', scheduled: 'Scheduled', done: 'Done' };
+
+  var app = document.getElementById('app');
+  var sb = null;
+  var projects = [];
+  var allSessions = [];
+  var cur = null; // { project, sessions }
+  var listening = false;
+
+  // ---- Helpers ----
+  function el(tag, props, kids) {
+    var n = document.createElement(tag);
+    if (props) Object.keys(props).forEach(function (k) {
+      if (k === 'text') n.textContent = props[k];
+      else if (k === 'class') n.className = props[k];
+      else if (k.indexOf('on') === 0) n.addEventListener(k.slice(2), props[k]);
+      else n.setAttribute(k, props[k]);
+    });
+    (kids || []).forEach(function (c) { if (c) n.appendChild(c); });
+    return n;
+  }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function fmt(n) { return (Math.round(n * 100) / 100).toString(); }
+  function hhmm(t) { return t ? String(t).slice(0, 5) : ''; }
+  function num(v) { var n = Number(v); return isNaN(n) ? 0 : n; }
+  function spanHours(a, b) {
+    if (!a || !b) return null;
+    var p = a.split(':'), q = b.split(':');
+    var m = (+q[0] * 60 + +q[1]) - (+p[0] * 60 + +p[1]);
+    if (m <= 0) m += 1440;
+    return Math.round((m / 60) * 100) / 100;
+  }
+  function budgetInfo(price, rate, used) {
+    var budget = rate > 0 ? price / rate : 0;
+    var diff = budget - used;
+    return {
+      budget: budget,
+      diff: diff,
+      over: diff < 0,
+      eff: used > 0 ? price / used : null,
+      pct: budget ? Math.min(100, (used / budget) * 100) : 0
+    };
+  }
+  function badgeText(rate, b) {
+    if (!(rate > 0)) return 'Set a target rate';
+    return b.over ? 'Over budget · ' + fmt(-b.diff) + ' hrs over' : 'Under budget · ' + fmt(b.diff) + ' hrs left';
+  }
+  function field(label, input, cls) {
+    return el('div', { class: 'tk-field' + (cls ? ' ' + cls : '') }, [el('label', { text: label }), input]);
+  }
+  function fail(e) {
+    var m = (e && e.message) ? e.message : 'Something went wrong.';
+    var box = document.getElementById('status');
+    if (box) { box.textContent = m; box.className = 'tk-msg error'; }
+  }
+
+  // ---- Boot (sign-in is handled by /js/auth.js and /login/) ----
+  function boot() {
+    var auth = window.tcscAuth;
+    if (!auth || !auth.sb) {
+      app.appendChild(el('div', { class: 'tk-msg error', text: 'Could not connect. Refresh to try again.' }));
+      return;
+    }
+    sb = auth.sb;
+    auth.ready.then(function (session) { if (session) start(); });
+  }
+
+  function start() {
+    if (!listening) { window.addEventListener('hashchange', route); listening = true; }
+    route();
+  }
+
+  function route() {
+    var m = location.hash.match(/^#\/project\/([0-9a-fA-F-]+)/);
+    if (m) showProject(m[1]); else showList();
+  }
+
+  // ---- Project list ----
+  async function loadProjects() {
+    var a = await sb.from('projects').select('*').order('created_at', { ascending: false });
+    var b = await sb.from('sessions').select('project_id,hours,status');
+    if (a.error) throw a.error;
+    if (b.error) throw b.error;
+    projects = a.data || [];
+    allSessions = b.data || [];
+  }
+
+  async function showList() {
+    clear(app);
+    app.appendChild(el('div', { class: 'tk-msg', id: 'status', text: 'Loading…' }));
+    try { await loadProjects(); } catch (e) { fail(e); return; }
+    clear(app);
+
+    app.appendChild(el('h1', { class: 'tk-title', text: 'Production tracker' }));
+    app.appendChild(el('p', { class: 'tk-sub', text: 'Hours, sessions and budget for every project.' }));
+
+    var title = el('input', { type: 'text', maxlength: '80', placeholder: 'Red Flowers (Single)' });
+    var artist = el('input', { type: 'text', maxlength: '80', placeholder: 'Artist' });
+    var price = el('input', { type: 'number', min: '0', step: '1', inputmode: 'decimal', placeholder: '0' });
+    var rate = el('input', { type: 'number', min: '0', step: '1', inputmode: 'decimal', value: '20' });
+    var status = el('div', { class: 'tk-msg', id: 'status' });
+    var create = el('button', { class: 'btn btn-solid', type: 'button', text: 'Create project' });
+    create.addEventListener('click', async function () {
+      var t = title.value.trim();
+      if (!t) { status.textContent = 'Give the project a name.'; status.className = 'tk-msg error'; return; }
+      create.disabled = true;
+      var r = await sb.from('projects').insert({
+        title: t, artist: artist.value.trim() || null,
+        price: num(price.value), target_rate: num(rate.value)
+      }).select().single();
+      create.disabled = false;
+      if (r.error) { fail(r.error); return; }
+      location.hash = '#/project/' + r.data.id;
+    });
+
+    app.appendChild(el('div', { class: 'tk-panel' }, [
+      el('h2', { class: 'tk-h2', text: 'New project' }),
+      el('div', { class: 'tk-grid-2' }, [
+        field('Project', title, 'tk-span'),
+        field('Artist', artist, 'tk-span'),
+        field('Price ($)', price),
+        field('Target rate ($/hr)', rate)
+      ]),
+      el('div', { style: 'margin-top:16px' }, [create]),
+      status
+    ]));
+
+    if (!projects.length) {
+      app.appendChild(el('div', { class: 'tk-empty', text: 'No projects yet. Create your first one above.' }));
+      return;
+    }
+
+    projects.forEach(function (p) {
+      var used = 0, done = 0, total = 0;
+      allSessions.forEach(function (s) {
+        if (s.project_id !== p.id) return;
+        total++;
+        if (s.status === 'done') done++;
+        if (s.hours !== null && s.hours !== undefined) used += num(s.hours);
+      });
+      var b = budgetInfo(num(p.price), num(p.target_rate), used);
+      var card = el('button', { class: 'tk-project', type: 'button' }, [
+        el('div', { class: 'tk-panel-head' }, [
+          el('h3', { text: p.title }),
+          el('span', { class: 'tk-badge' + (b.over ? ' over' : ''), text: badgeText(num(p.target_rate), b) })
+        ]),
+        el('div', { class: 'meta', text: p.artist || 'No artist set' }),
+        el('div', { class: 'tk-bar' }, [el('div', { class: b.over ? 'over' : '', style: 'width:' + b.pct + '%' })]),
+        el('div', { class: 'foot' }, [
+          el('span', { class: 'mono', text: fmt(used) + ' of ' + fmt(b.budget) + ' hrs' }),
+          el('span', { class: 'mono', text: done + '/' + total + ' sessions done' })
+        ])
+      ]);
+      card.addEventListener('click', function () { location.hash = '#/project/' + p.id; });
+      app.appendChild(card);
+    });
+  }
+
+  // ---- Project detail ----
+  async function showProject(id) {
+    clear(app);
+    app.appendChild(el('div', { class: 'tk-msg', id: 'status', text: 'Loading…' }));
+    var pr = await sb.from('projects').select('*').eq('id', id).maybeSingle();
+    if (pr.error) { fail(pr.error); return; }
+    if (!pr.data) { location.hash = '#/'; return; }
+    var sr = await sb.from('sessions').select('*').eq('project_id', id)
+      .order('sort_order', { ascending: true }).order('session_date', { ascending: true });
+    if (sr.error) { fail(sr.error); return; }
+    cur = { project: pr.data, sessions: sr.data || [], ui: {} };
+    renderProject();
+  }
+
+  function renderProject() {
+    var p = cur.project;
+    var ui = cur.ui = { rows: {} };
+    clear(app);
+
+    app.appendChild(el('a', { class: 'tk-back', href: '#/', text: '← All projects' }));
+    app.appendChild(el('h1', { class: 'tk-title', text: p.title }));
+    app.appendChild(el('p', { class: 'tk-sub', text: p.artist || '' }));
+
+    // Budget panel
+    ui.badge = el('span', { class: 'tk-badge' });
+    ui.price = el('input', { type: 'number', min: '0', step: '1', inputmode: 'decimal', value: String(num(p.price)) });
+    ui.rate = el('input', { type: 'number', min: '0', step: '1', inputmode: 'decimal', value: String(num(p.target_rate)) });
+    ui.nBudget = el('div', { class: 'n' });
+    ui.nUsed = el('div', { class: 'n' });
+    ui.nEff = el('div', { class: 'n' });
+    ui.fill = el('div');
+    ui.done = el('span', { class: 'mono', style: 'font-size:0.68rem;color:var(--muted)' });
+
+    function saveProject() {
+      p.price = Math.max(0, num(ui.price.value));
+      p.target_rate = Math.max(0, num(ui.rate.value));
+      refresh();
+      sb.from('projects').update({ price: p.price, target_rate: p.target_rate }).eq('id', p.id).then(function (r) { if (r.error) fail(r.error); });
+    }
+    ui.price.addEventListener('change', saveProject);
+    ui.rate.addEventListener('change', saveProject);
+
+    app.appendChild(el('div', { class: 'tk-panel' }, [
+      el('div', { class: 'tk-panel-head' }, [el('h2', { class: 'tk-h2', text: 'Budget' }), ui.badge]),
+      el('div', { class: 'tk-grid-2' }, [field('Project price ($)', ui.price), field('Target rate ($/hr)', ui.rate)]),
+      el('div', { class: 'tk-stats' }, [
+        el('div', { class: 'tk-stat' }, [ui.nBudget, el('div', { class: 'l', text: 'budgeted hrs' })]),
+        el('div', { class: 'tk-stat' }, [ui.nUsed, el('div', { class: 'l', text: 'hrs used' })]),
+        el('div', { class: 'tk-stat' }, [ui.nEff, el('div', { class: 'l', text: 'effective $/hr' })])
+      ]),
+      el('div', { class: 'tk-bar' }, [ui.fill]),
+      el('div', { style: 'margin-top:10px' }, [ui.done])
+    ]));
+
+    // Sessions
+    app.appendChild(el('h2', { class: 'tk-h2', text: 'Sessions' }));
+    ui.list = el('div');
+    app.appendChild(ui.list);
+    renderSessions();
+
+    // Add session
+    var newTitle = el('input', { type: 'text', maxlength: '80', placeholder: 'e.g. Mixing' });
+    var addBtn = el('button', { class: 'btn btn-solid', type: 'button', text: 'Add session' });
+    async function addSession() {
+      var t = newTitle.value.trim();
+      if (!t) return;
+      var max = cur.sessions.reduce(function (m, s) { return Math.max(m, s.sort_order || 0); }, 0);
+      var r = await sb.from('sessions').insert({ project_id: p.id, title: t, status: 'todo', sort_order: max + 1 }).select().single();
+      if (r.error) { fail(r.error); return; }
+      cur.sessions.push(r.data);
+      newTitle.value = '';
+      renderSessions();
+    }
+    addBtn.addEventListener('click', addSession);
+    newTitle.addEventListener('keydown', function (e) { if (e.key === 'Enter') addSession(); });
+    app.appendChild(el('div', { class: 'tk-add' }, [field('New session', newTitle), el('div', { style: 'align-self:flex-end' }, [addBtn])]));
+
+    app.appendChild(el('div', { class: 'tk-msg', id: 'status' }));
+
+    var del = el('button', { class: 'tk-linkbtn', type: 'button', text: 'Delete this project' });
+    del.addEventListener('click', async function () {
+      if (!confirm('Delete “' + p.title + '” and all of its sessions?')) return;
+      var r = await sb.from('projects').delete().eq('id', p.id);
+      if (r.error) { fail(r.error); return; }
+      location.hash = '#/';
+    });
+    app.appendChild(el('div', { style: 'margin-top:32px' }, [del]));
+
+    refresh();
+  }
+
+  function renderSessions() {
+    var ui = cur.ui;
+    clear(ui.list);
+    ui.rows = {};
+    if (!cur.sessions.length) {
+      ui.list.appendChild(el('div', { class: 'tk-empty', text: 'No sessions yet. Add the first one below.' }));
+    }
+    cur.sessions.forEach(function (s) { ui.list.appendChild(sessionCard(s)); });
+    refresh();
+  }
+
+  function patchSession(s, patch) {
+    Object.keys(patch).forEach(function (k) { s[k] = patch[k]; });
+    refresh();
+    sb.from('sessions').update(patch).eq('id', s.id).then(function (r) { if (r.error) fail(r.error); });
+  }
+
+  function sessionCard(s) {
+    var ref = cur.ui.rows[s.id] = {};
+
+    var pill = el('button', { class: 'tk-pill ' + s.status, type: 'button', text: LABELS[s.status] });
+    pill.addEventListener('click', function () {
+      var next = STATUSES[(STATUSES.indexOf(s.status) + 1) % STATUSES.length];
+      pill.className = 'tk-pill ' + next;
+      pill.textContent = LABELS[next];
+      patchSession(s, { status: next });
+    });
+
+    var date = el('input', { type: 'date', value: s.session_date || '' });
+    date.addEventListener('change', function () { patchSession(s, { session_date: date.value || null }); });
+
+    var start = el('input', { type: 'time', value: hhmm(s.start_time) });
+    var end = el('input', { type: 'time', value: hhmm(s.end_time) });
+    var hrs = el('input', { type: 'number', min: '0', step: '0.25', inputmode: 'decimal', placeholder: '0' });
+    if (s.hours !== null && s.hours !== undefined) hrs.value = String(num(s.hours));
+    ref.hrs = hrs;
+
+    function saveTimes() {
+      var patch = { start_time: start.value || null, end_time: end.value || null };
+      var h = spanHours(start.value, end.value);
+      if (h !== null) { patch.hours = h; hrs.value = String(h); }
+      patchSession(s, patch);
+    }
+    start.addEventListener('change', saveTimes);
+    end.addEventListener('change', saveTimes);
+    hrs.addEventListener('change', function () {
+      var v = parseFloat(hrs.value);
+      patchSession(s, { hours: isNaN(v) ? null : Math.max(0, v) });
+    });
+
+    var notes = el('input', { type: 'text', maxlength: '300', placeholder: 'Notes', value: s.notes || '' });
+    notes.addEventListener('change', function () { patchSession(s, { notes: notes.value }); });
+
+    var del = el('button', { class: 'tk-linkbtn', type: 'button', text: 'Remove session' });
+    del.addEventListener('click', async function () {
+      if (!confirm('Remove “' + s.title + '”?')) return;
+      var r = await sb.from('sessions').delete().eq('id', s.id);
+      if (r.error) { fail(r.error); return; }
+      cur.sessions = cur.sessions.filter(function (x) { return x.id !== s.id; });
+      renderSessions();
+    });
+
+    return el('div', { class: 'tk-session' }, [
+      el('div', { class: 'tk-session-head' }, [el('h3', { text: s.title }), pill]),
+      el('div', { class: 'tk-grid-3' }, [
+        field('Date', date, 'tk-span'),
+        field('Start', start),
+        field('End', end),
+        field('Hours', hrs)
+      ]),
+      el('div', { style: 'margin-top:12px' }, [field('Notes', notes)]),
+      del
+    ]);
+  }
+
+  // Recompute budget numbers without rebuilding the page (keeps focus while tabbing through fields)
+  function refresh() {
+    if (!cur || !cur.ui || !cur.ui.badge) return;
+    var p = cur.project, ui = cur.ui;
+    var used = 0, done = 0;
+    cur.sessions.forEach(function (s) {
+      if (s.hours !== null && s.hours !== undefined) used += num(s.hours);
+      if (s.status === 'done') done++;
+    });
+    var b = budgetInfo(num(p.price), num(p.target_rate), used);
+    ui.nBudget.textContent = fmt(b.budget);
+    ui.nUsed.textContent = fmt(used);
+    ui.nEff.textContent = b.eff === null ? '—' : '$' + fmt(b.eff);
+    ui.badge.textContent = badgeText(num(p.target_rate), b);
+    ui.badge.className = 'tk-badge' + (b.over || !(num(p.target_rate) > 0) ? ' over' : '');
+    ui.fill.style.width = b.pct + '%';
+    ui.fill.className = b.over ? 'over' : '';
+    ui.done.textContent = done + '/' + cur.sessions.length + ' sessions done';
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

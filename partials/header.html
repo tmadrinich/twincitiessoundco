@@ -15,10 +15,20 @@
         <li><a href="/services/">Services</a></li>
         <li><a href="/musicians/">Musicians</a></li>
         <li><a href="/network/">Network</a></li>
-        <li><a href="/settlement/">Settlement</a></li>
+        <li class="nav-mobile-only" data-auth-only><a href="/production-tracker/">Production Tracker</a></li>
+        <li class="nav-mobile-only" data-auth-only><a href="/settlement/">Settlement</a></li>
         <li class="nav-mobile-only"><a href="/#contact">Contact</a></li>
+        <li class="nav-mobile-only" data-guest-only><a href="/login/">Log in</a></li>
+        <li class="nav-mobile-only" data-auth-only><a href="/login/?signout=1">Sign out</a></li>
       </ul>
     </nav>
-    <a href="/#contact" class="btn nav-cta">Contact</a>
+    <div class="nav-actions">
+      <a href="/login/" class="nav-login" data-guest-only>Log in</a>
+      <a href="/production-tracker/" class="nav-login nav-wide" data-auth-only>Production Tracker</a>
+      <a href="/settlement/" class="nav-login nav-wide" data-auth-only>Settlement</a>
+      <a href="/login/?signout=1" class="nav-login nav-wide" data-auth-only>Sign out</a>
+      <a href="/login/" class="nav-login nav-narrow" data-auth-only>Members</a>
+      <a href="/#contact" class="btn nav-cta">Contact</a>
+    </div>
   </div>
 </header>

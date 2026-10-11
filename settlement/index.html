@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-require-auth>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Show Settlement — Twin Cities Sound Company</title>
 <meta name="description" content="End-of-night show settlement tool for Twin Cities Sound Company artists and shows.">
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="/assets/tcsc-icon.png">
 <link rel="apple-touch-icon" href="/assets/tcsc-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -217,7 +218,8 @@
 
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/js/auth.js"></script>
 <script src="/js/main.js" defer></script>
 <script src="/js/settlement.js" defer></script>
 
