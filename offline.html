@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#121212">
+<title>Offline — Twin Cities Sound Company</title>
+<style>
+  body{
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #121212; color: #EDE6D8; font-family: 'Archivo', system-ui, sans-serif;
+    text-align: center; padding: 24px; box-sizing: border-box;
+  }
+  img{ width: 120px; height: 120px; border-radius: 24px; margin-bottom: 28px; }
+  h1{
+    font-family: 'Anton', 'Arial Narrow', sans-serif; font-weight: 400; text-transform: uppercase;
+    letter-spacing: 0.015em; font-size: 2.4rem; line-height: 1; margin: 0 0 12px;
+  }
+  p{ color: #8F887C; margin: 0 0 28px; }
+  button{
+    font: 600 0.78rem 'Archivo', system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.1em;
+    background: #8C6239; color: #EDE6D8; border: 0; padding: 14px 28px; border-radius: 4px; cursor: pointer;
+  }
+  button:hover{ background: #6B4A2A; }
+  button:focus-visible{ outline: 2px solid #B98D52; outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <main>
+    <img src="/assets/app/icon-192.png" alt="">
+    <h1>You're offline</h1>
+    <p>Check your connection and try again.</p>
+    <button type="button" onclick="location.reload()">Try again</button>
+  </main>
+</body>
+</html>
