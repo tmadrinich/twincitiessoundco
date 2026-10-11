@@ -69,7 +69,9 @@ a:focus-visible, button:focus-visible{
 .wrap{
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 28px;
+  /* sides only, so section top/bottom spacing still applies */
+  padding-left: 28px;
+  padding-right: 28px;
 }
 
 /* Grids that sit outside .wrap: match .wrap's content width and gutters */
@@ -265,6 +267,13 @@ header .btn:hover{
   margin-bottom: 44px;
 }
 section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
+
+/* ---------- SECTION PATTERNS ---------- */
+/* Heading that leads straight into a grid below it */
+section.section-intro{ padding-bottom: 32px; }
+/* Centered closing call-to-action */
+.cta-band{ text-align: center; }
+.cta-band .section-label{ margin-bottom: 20px; }
 
 /* ---------- CHANNEL STRIPS (services) ---------- */
 .channels{
@@ -528,7 +537,7 @@ footer{ padding: 72px 0 40px; }
 
 /* ---------- MOBILE POLISH ---------- */
 @media (max-width: 640px){
-  .wrap{ padding: 0 20px; }
+  .wrap{ padding-left: 20px; padding-right: 20px; }
 
   .hero{ padding-top: 48px; padding-bottom: 40px; }
   .channels, .rooms{ width: calc(100% - 40px); }
