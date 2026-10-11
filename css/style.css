@@ -7,6 +7,10 @@
   --signal: #B98D52;
   --cream: #EDE6D8;
   --muted: #8F887C;
+
+  /* 2026 brand guide type */
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Archivo', system-ui, sans-serif;
 }
 
 /* Smooth native cross-fade between pages (supporting browsers only — no-op elsewhere) */
@@ -43,16 +47,16 @@ body{
   margin: 0;
   background: var(--bg);
   color: var(--cream);
-  font-family: 'Archivo', system-ui, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
 }
 
-.mono{ font-family: 'Space Mono', monospace; }
 
 h1, h2, h3, .display{
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
   margin: 0;
 }
 
@@ -182,32 +186,31 @@ header nav ul li a:hover{ color: var(--cream); }
   }
 }
 header .btn{
-  border-color: var(--brass);
-  color: var(--brass);
+  border-color: var(--signal);
+  color: var(--signal);
 }
 header .btn:hover{
-  background: var(--brass);
+  background: var(--signal);
   color: var(--bg);
 }
 .btn{
-  font-family: 'Space Mono', monospace;
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-decoration: none;
   padding: 10px 18px;
-  border: 1px solid var(--brass);
-  color: var(--brass);
+  border: 1px solid var(--signal);
+  color: var(--signal);
   background: transparent;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
-.btn:hover{ background: var(--brass); color: var(--bg); }
+.btn:hover{ background: var(--signal); color: var(--bg); }
 .btn-solid{
   background: var(--brass);
-  color: var(--bg);
+  color: var(--cream);
   border-color: var(--brass);
 }
-.btn-solid:hover{ background: var(--brass-dim); border-color: var(--brass-dim); }
+.btn-solid:hover, .btn-solid:active{ background: var(--brass-dim); border-color: var(--brass-dim); color: var(--cream); }
 
 /* ---------- HERO ---------- */
 .hero{
@@ -216,7 +219,6 @@ header .btn:hover{
   position: relative;
 }
 .hero-eyebrow{
-  font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   color: var(--signal);
   letter-spacing: 0.14em;
@@ -237,14 +239,14 @@ header .btn:hover{
   50%{ opacity: 0.35; }
 }
 .hero h1{
-  font-size: clamp(3rem, 9vw, 6.2rem);
-  line-height: 0.94;
+  font-size: clamp(2.6rem, 8vw, 5.6rem);
+  line-height: 1;
   color: var(--cream);
 }
 .hero h1 span{ color: var(--brass); }
 .hero-tag{
   max-width: 46ch;
-  color: var(--muted);
+  color: var(--cream);
   font-size: 1.05rem;
   margin: 26px 0 36px;
 }
@@ -287,7 +289,6 @@ header .btn:hover{
 
 /* ---------- SECTION LABELS ---------- */
 .section-label{
-  font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   color: var(--muted);
   letter-spacing: 0.14em;
@@ -323,9 +324,8 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   background: var(--surface);
 }
 .channel-num{
-  font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
-  color: var(--brass);
+  color: var(--signal);
   letter-spacing: 0.1em;
 }
 .channel h3{
@@ -374,7 +374,7 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   .about-grid{ grid-template-columns: 1fr; }
 }
 .about-grid p{
-  color: var(--muted);
+  color: var(--cream);
   font-size: 1rem;
   margin: 0 0 16px;
 }
@@ -382,7 +382,6 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   list-style: none;
   margin: 0;
   padding: 0;
-  font-family: 'Space Mono', monospace;
   font-size: 0.85rem;
 }
 .specs li{
@@ -431,9 +430,8 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   gap: 16px;
 }
 .artist-tag{
-  font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
-  color: var(--brass);
+  color: var(--signal);
   letter-spacing: 0.08em;
 }
 .artist-card h3{
@@ -452,10 +450,9 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   gap: 8px;
 }
 .tag{
-  font-family: 'Space Mono', monospace;
   font-size: 0.68rem;
   letter-spacing: 0.04em;
-  color: var(--brass);
+  color: var(--signal);
   border: 1px solid var(--line);
   padding: 4px 10px;
   border-radius: 999px;
@@ -468,7 +465,7 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   background: var(--surface);
   border: 1px solid var(--line);
   color: var(--cream);
-  font-family: 'Archivo', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   padding: 12px 16px;
   border-radius: 4px;
@@ -476,7 +473,7 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   transition: border-color 0.15s ease;
 }
 .search-input::placeholder{ color: var(--muted); }
-.search-input:focus{ border-color: var(--brass); }
+.search-input:focus{ border-color: var(--signal); }
 
 .filter-pills{
   display: flex;
@@ -484,7 +481,6 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
   gap: 10px;
 }
 .filter-pill{
-  font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
   letter-spacing: 0.05em;
   color: var(--muted);
@@ -497,8 +493,8 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
 }
 .filter-pill:hover{ color: var(--cream); }
 .filter-pill.is-active{
-  border-color: var(--brass);
-  color: var(--brass);
+  border-color: var(--signal);
+  color: var(--signal);
 }
 
 .filter-group{
@@ -536,7 +532,6 @@ section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
 }
 .room-row span:first-child{ font-size: 1rem; color: var(--cream); }
 .room-row span:last-child{
-  font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
   color: var(--muted);
   letter-spacing: 0.08em;
@@ -566,7 +561,6 @@ footer{ padding: 72px 0 40px; }
 .contact-list li{ margin-bottom: 18px; }
 .contact-list .label{
   display: block;
-  font-family: 'Space Mono', monospace;
   font-size: 0.7rem;
   color: var(--muted);
   letter-spacing: 0.1em;
@@ -575,10 +569,10 @@ footer{ padding: 72px 0 40px; }
 .contact-list a{
   text-decoration: none;
   font-size: 1.1rem;
-  color: var(--brass);
+  color: var(--signal);
   border-bottom: 1px solid transparent;
 }
-.contact-list a:hover{ border-bottom-color: var(--brass); }
+.contact-list a:hover{ border-bottom-color: var(--signal); }
 
 .foot-bottom{
   display: flex;
@@ -588,7 +582,6 @@ footer{ padding: 72px 0 40px; }
   gap: 12px;
   padding-top: 28px;
   border-top: 1px solid var(--line);
-  font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
   color: var(--muted);
   letter-spacing: 0.06em;
@@ -628,7 +621,6 @@ footer{ padding: 72px 0 40px; }
   margin-bottom: 18px;
 }
 .field label{
-  font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
   color: var(--muted);
   letter-spacing: 0.06em;
@@ -639,7 +631,7 @@ footer{ padding: 72px 0 40px; }
   background: var(--surface);
   border: 1px solid var(--line);
   color: var(--cream);
-  font-family: 'Archivo', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   padding: 10px 14px;
   border-radius: 4px;
@@ -648,7 +640,7 @@ footer{ padding: 72px 0 40px; }
 }
 .field input:focus,
 .field select:focus,
-.field textarea:focus{ border-color: var(--brass); }
+.field textarea:focus{ border-color: var(--signal); }
 .field textarea{ resize: vertical; min-height: 80px; }
 
 .form-grid{
@@ -684,15 +676,14 @@ footer{ padding: 72px 0 40px; }
   padding: 16px;
   text-align: center;
   cursor: pointer;
-  font-family: 'Space Mono', monospace;
   font-size: 0.78rem;
   color: var(--muted);
   letter-spacing: 0.04em;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 .deal-type-option input:checked + label{
-  border-color: var(--brass);
-  color: var(--brass);
+  border-color: var(--signal);
+  color: var(--signal);
 }
 
 .conditional-block{ display: none; }
@@ -719,7 +710,7 @@ footer{ padding: 72px 0 40px; }
   font-size: 1.1rem;
   line-height: 1;
 }
-.remove-row-btn:hover{ border-color: var(--brass); color: var(--brass); }
+.remove-row-btn:hover{ border-color: var(--signal); color: var(--signal); }
 
 .payee-row{
   display: grid;
@@ -732,9 +723,8 @@ footer{ padding: 72px 0 40px; }
   .payee-row{ grid-template-columns: 1fr 70px 90px 32px; }
 }
 .payee-amount{
-  font-family: 'Space Mono', monospace;
   font-size: 0.92rem;
-  color: var(--brass);
+  color: var(--signal);
   text-align: right;
 }
 
@@ -752,7 +742,7 @@ footer{ padding: 72px 0 40px; }
   font-size: 0.92rem;
   color: var(--muted);
 }
-.summary-row span:last-child{ color: var(--cream); font-family: 'Space Mono', monospace; }
+.summary-row span:last-child{ color: var(--cream); }
 .summary-total{
   display: flex;
   justify-content: space-between;
@@ -761,13 +751,12 @@ footer{ padding: 72px 0 40px; }
   margin-top: 8px;
 }
 .summary-total .label{
-  font-family: 'Space Mono', monospace;
   font-size: 0.85rem;
   color: var(--cream);
   letter-spacing: 0.05em;
 }
 .summary-total .amount{
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-display);
   font-size: 2.4rem;
   color: var(--brass);
 }
@@ -784,19 +773,34 @@ footer{ padding: 72px 0 40px; }
 .past-entry:last-child{ border-bottom: none; }
 .past-entry .pe-main{ color: var(--cream); }
 .past-entry .pe-meta{
-  font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   color: var(--muted);
 }
 .past-entry .pe-amount{
-  font-family: 'Space Mono', monospace;
-  color: var(--brass);
+  color: var(--signal);
 }
 
 .status-message{
-  font-family: 'Space Mono', monospace;
   font-size: 0.8rem;
   padding: 10px 0;
 }
 .status-message.success{ color: var(--signal); }
 .status-message.error{ color: #C0645A; }
+
+/* ---------- 2026 BRAND TYPE (kept last so it wins) ---------- */
+/* Labels, tags, buttons, figures: Archivo SemiBold caps, wide tracking */
+.mono, .btn, .hero-eyebrow, .section-label, .channel-num, .artist-tag, .tag,
+.filter-pill, .filter-group-label, .room-row span:last-child, .contact-list .label,
+.foot-bottom, .field label, .deal-type-option label, .summary-total .label{
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+/* Figures and data: Archivo with tabular numbers, sentence case */
+.specs, .payee-amount, .summary-row span:last-child, .past-entry .pe-meta,
+.past-entry .pe-amount, .status-message{
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
