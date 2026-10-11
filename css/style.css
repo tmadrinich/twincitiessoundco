@@ -72,6 +72,14 @@ a:focus-visible, button:focus-visible{
   padding: 0 28px;
 }
 
+/* Grids that sit outside .wrap: match .wrap's content width and gutters */
+.channels, .rooms{
+  width: calc(100% - 56px);
+  max-width: calc(1120px - 56px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Keep anchor-linked targets from landing underneath the sticky header */
 [id]{
   scroll-margin-top: 100px;
@@ -214,7 +222,9 @@ header .btn:hover{
 
 /* ---------- HERO ---------- */
 .hero{
-  padding: 96px 0 72px;
+  /* top/bottom only, so .wrap keeps the side gutters */
+  padding-top: 96px;
+  padding-bottom: 72px;
   border-bottom: 1px solid var(--line);
   position: relative;
 }
@@ -520,7 +530,8 @@ footer{ padding: 72px 0 40px; }
 @media (max-width: 640px){
   .wrap{ padding: 0 20px; }
 
-  .hero{ padding: 48px 0 40px; }
+  .hero{ padding-top: 48px; padding-bottom: 40px; }
+  .channels, .rooms{ width: calc(100% - 40px); }
   .hero-tag{ font-size: 0.98rem; }
 
   section{ padding: 48px 0; }
