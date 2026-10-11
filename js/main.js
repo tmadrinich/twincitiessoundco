@@ -1,3 +1,23 @@
+// ---------- Signed-in state for the nav ----------
+// Public pages don't load Supabase, so this just checks for a stored session to
+// show Log in vs. Sign out and the members-only links. Protected pages verify the
+// session for real in /js/auth.js.
+(function () {
+  var root = document.documentElement;
+  if (root.hasAttribute('data-require-auth') || root.getAttribute('data-auth')) return;
+  var signedIn = false;
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (/^sb-.+-auth-token$/.test(key)) {
+        var val = JSON.parse(localStorage.getItem(key));
+        if (val && val.refresh_token) signedIn = true;
+      }
+    }
+  } catch (e) { /* storage blocked: treat as signed out */ }
+  root.setAttribute('data-auth', signedIn ? 'in' : 'out');
+})();
+
 // ---------- Load shared header/footer partials ----------
 async function loadPartial(placeholderId, url) {
   try {

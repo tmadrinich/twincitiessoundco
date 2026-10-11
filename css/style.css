@@ -101,6 +101,10 @@ header{
   align-items: center;
   padding: 14px 0;
 }
+/* Below the 1120px max width, keep side gutters so the header doesn't touch the screen edge */
+@media (min-width: 801px) and (max-width: 1175px){
+  .nav{ padding-left: 28px; padding-right: 28px; }
+}
 .brand{
   display: flex;
   justify-content: center;
@@ -127,9 +131,26 @@ header nav ul li a{
   transition: color 0.15s ease;
 }
 header nav ul li a:hover{ color: var(--cream); }
-.nav-cta{
+.nav-actions{
   order: 3;
   justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+}
+.nav-login{
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.nav-login:hover{ color: var(--cream); }
+/* Signed-in links: full set on wide screens, a single "Members" hub link on mid-size screens */
+.nav-narrow{ display: none; }
+@media (max-width: 1199px){
+  .nav-wide{ display: none; }
+  .nav-narrow{ display: inline; }
 }
 .nav-mobile-only{ display: none; }
 
@@ -167,7 +188,7 @@ header nav ul li a:hover{ color: var(--cream); }
   }
   .brand{ order: 1; justify-content: flex-start; }
   .nav-toggle-label{ display: flex; order: 2; }
-  .nav-cta{ display: none; }
+  .nav-actions{ display: none; }
   .nav-mobile-only{ display: block; }
 
   nav{
@@ -181,7 +202,7 @@ header nav ul li a:hover{ color: var(--cream); }
     overflow: hidden;
     transition: max-height 0.25s ease;
   }
-  .nav-toggle:checked ~ nav{ max-height: 340px; }
+  .nav-toggle:checked ~ nav{ max-height: 480px; }
   nav ul{
     flex-direction: column;
     gap: 0;
@@ -736,11 +757,18 @@ footer{ padding: 72px 0 40px; }
 .status-message.success{ color: var(--signal); }
 .status-message.error{ color: #C0645A; }
 
+/* ---------- SIGNED-IN STATE ---------- */
+/* <html data-auth="in|out"> is set by js/main.js (public pages) or js/auth.js (protected pages). */
+html:not([data-auth="in"]) [data-auth-only]{ display: none !important; }
+html[data-auth="in"] [data-guest-only]{ display: none !important; }
+/* Protected pages stay hidden until the session is confirmed (or the visitor is sent to /login/). */
+html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
+
 /* ---------- 2026 BRAND TYPE (kept last so it wins) ---------- */
 /* Labels, tags, buttons, figures: Archivo SemiBold caps, wide tracking */
 .mono, .btn, .hero-eyebrow, .section-label, .channel-num, .artist-tag, .tag,
 .filter-pill, .filter-group-label, .room-row span:last-child, .contact-list .label,
-.foot-bottom, .field label, .deal-type-option label, .summary-total .label{
+.foot-bottom, .field label, .deal-type-option label, .summary-total .label, .nav-login{
   font-family: var(--font-body);
   font-weight: 600;
   text-transform: uppercase;

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Log In — Twin Cities Sound Company</title>
+<link rel="icon" type="image/png" href="/assets/tcsc-icon.png">
+<link rel="apple-touch-icon" href="/assets/tcsc-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  .login-wrap{ max-width: 420px; }
+  .login-wrap .section-title{ margin-bottom: 12px; }
+  .login-sub{ color: var(--muted); margin: 0 0 32px; }
+  .login-wrap .btn{ width: 100%; padding-top: 14px; padding-bottom: 14px; }
+  .login-links{ display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .login-links .btn{ text-align: center; }
+  [hidden]{ display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+  <section class="hero wrap login-wrap">
+    <div class="section-label mono">MEMBERS</div>
+
+    <!-- Signed out -->
+    <div id="login-view" hidden>
+      <h1 class="section-title">Log in</h1>
+      <p class="login-sub">Access the production tracker and show settlement.</p>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" name="email" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-solid" id="login-submit">Log in</button>
+        <div id="login-status" class="status-message" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <!-- Signed in -->
+    <div id="member-view" hidden>
+      <h1 class="section-title">You're logged in</h1>
+      <p class="login-sub" id="member-email"></p>
+      <div class="login-links">
+        <a class="btn btn-solid" href="/production-tracker/">Production Tracker</a>
+        <a class="btn" href="/settlement/">Settlement</a>
+      </div>
+      <a href="/login/?signout=1" class="nav-login">Sign out</a>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js" defer></script>
+<script>
+(function () {
+  'use strict';
+  var auth = window.tcscAuth;
+  var params = new URLSearchParams(location.search);
+  var loginView = document.getElementById('login-view');
+  var memberView = document.getElementById('member-view');
+  var form = document.getElementById('login-form');
+  var email = document.getElementById('login-email');
+  var pass = document.getElementById('login-password');
+  var submit = document.getElementById('login-submit');
+  var status = document.getElementById('login-status');
+
+  // Only follow same-site paths after login (blocks open redirects like //evil.com)
+  function nextPath() {
+    var n = params.get('next') || '';
+    return /^\/(?!\/)[^\\]*$/.test(n) ? n : '/production-tracker/';
+  }
+  function say(msg, kind) {
+    status.textContent = msg || '';
+    status.className = 'status-message' + (kind ? ' ' + kind : '');
+  }
+  function showLogin() { memberView.hidden = true; loginView.hidden = false; email.focus(); }
+  function showMember(session) {
+    loginView.hidden = true;
+    memberView.hidden = false;
+    document.getElementById('member-email').textContent = session.user.email;
+  }
+
+  if (!auth || !auth.sb) {
+    showLogin();
+    say('Login is unavailable right now. Try again in a minute.', 'error');
+    submit.disabled = true;
+    return;
+  }
+
+  if (params.has('signout')) {
+    auth.sb.auth.signOut({ scope: 'local' }).then(function () {
+      document.documentElement.setAttribute('data-auth', 'out');
+      history.replaceState(null, '', '/login/');
+      showLogin();
+      say('You’re signed out.', 'success');
+    });
+  } else {
+    auth.ready.then(function (session) { if (session) showMember(session); else showLogin(); });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!email.value.trim() || !pass.value) { say('Enter your email and password.', 'error'); return; }
+    submit.disabled = true;
+    say('Logging in…');
+    auth.sb.auth.signInWithPassword({ email: email.value.trim(), password: pass.value }).then(function (r) {
+      submit.disabled = false;
+      if (r.error) { say(r.error.message === 'Invalid login credentials' ? 'That email and password don’t match.' : r.error.message, 'error'); return; }
+      location.replace(nextPath());
+    });
+  });
+})();
+</script>
+</body>
+</html>
