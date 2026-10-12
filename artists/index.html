@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v=20261012">
 </head>
 <body>
 
@@ -24,14 +24,28 @@
 
 <main>
 
-  <section class="hero wrap" style="border-bottom:1px solid var(--line); padding-bottom: 48px;">
-    <div class="section-label mono">ARTISTS</div>
+  <section class="hero wrap" style="border-bottom:1px solid var(--line); padding-bottom: 56px;">
+    <div class="hero-eyebrow">ARTISTS</div>
     <h1 class="section-title" style="margin-bottom: 16px;">Who we represent</h1>
-    <p class="hero-tag">Original artists and cover bands across the Twin Cities and Midwest. Every artist we represent is bookable through us.</p>
+    <p class="hero-tag">Original artists and cover bands across the Twin Cities and Midwest. Book one for your room, or join the roster.</p>
+    <div class="door-grid">
+      <a href="#roster" class="door">
+        <span class="door-eyebrow mono">For venues &amp; event organizers</span>
+        <span class="door-title">Book an artist</span>
+        <span class="door-text">Everyone on the roster is bookable through us. One contact from first call to settlement.</span>
+        <span class="door-link mono">See the roster ↓</span>
+      </a>
+      <a href="#representation" class="door">
+        <span class="door-eyebrow mono">For artists</span>
+        <span class="door-title">Get represented</span>
+        <span class="door-text">Booking, brand and recording support built around what you actually need.</span>
+        <span class="door-link mono">How it works ↓</span>
+      </a>
+    </div>
   </section>
 
-  <section class="wrap fade-section">
-    <div class="section-label mono">01 / REPRESENTED ARTISTS</div>
+  <section id="roster" class="wrap fade-section" style="border-bottom:none; padding-bottom: 32px;">
+    <div class="section-label mono">01 / THE ROSTER</div>
     <h2 class="section-title" style="margin-bottom: 24px;">Book through us</h2>
 
     <div class="filter-group">
@@ -55,112 +69,151 @@
       </div>
     </div>
   </section>
-  <div class="wrap artist-grid fade-section" id="artist-grid">
+  <div class="wrap artist-grid roster-grid fade-section" id="artist-grid">
       <div class="artist-card" data-type="cover-band" data-genre="rock country">
-        <div>
+        <img class="artist-photo" src="/assets/artists/whiskey-peddler.jpg" alt="Whiskey Peddler" width="1200" height="960" loading="lazy">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">COVER BAND</span><span class="bookable-tag mono">BOOKABLE</span></div>
           <h3>Whiskey Peddler</h3>
-        </div>
-        <p>Redneck rock n' roll cover band playing bars, backyard events, and festivals across the Midwest.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-          <li>Social media &amp; promotion</li>
-          <li>Website development</li>
-          <li>Content creation</li>
-          <li>Merch &amp; show-day operations</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Whiskey%20Peddler&amp;body=Artist%3A%20Whiskey%20Peddler%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Whiskey Peddler</a>
-          <a href="https://whiskeypeddlerband.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Rock · Country</p>
+          <p class="artist-bio">Redneck rock n' roll cover band playing bars, backyard events, and festivals across the Midwest.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Whiskey%20Peddler&amp;body=Artist%3A%20Whiskey%20Peddler%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Whiskey Peddler</a>
+            <a href="https://whiskeypeddlerband.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
       <div class="artist-card" data-type="original-artist" data-genre="country acoustic">
-        <div>
+        <img class="artist-photo" src="/assets/artists/matt-mueller.jpg" alt="Matt Mueller" width="1200" height="801" loading="lazy" style="object-position: 50% 30%;">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">ORIGINAL ARTIST</span><span class="bookable-tag mono">BOOKABLE</span><span class="format-tag mono">ORIGINALS + COVERS</span></div>
           <h3>Matt Mueller</h3>
-        </div>
-        <p>Country artist with an upcoming EP led by the single "In Over My Head" and a growing regional touring footprint.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-          <li>Tour planning</li>
-          <li>Release &amp; streaming strategy</li>
-          <li>Social media &amp; promotion</li>
-          <li>Website development</li>
-          <li>Content creation</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Matt%20Mueller&amp;body=Artist%3A%20Matt%20Mueller%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Matt Mueller</a>
-          <a href="https://mattmuellermusic.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Country · Acoustic</p>
+          <p class="artist-bio">Country artist with an upcoming EP led by the single "In Over My Head" and a growing regional touring footprint.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Matt%20Mueller&amp;body=Artist%3A%20Matt%20Mueller%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Matt Mueller</a>
+            <a href="https://mattmuellermusic.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
       <div class="artist-card" data-type="original-artist" data-genre="rock country acoustic">
-        <div>
+        <img class="artist-photo" src="/assets/artists/angel-val.jpg" alt="Angel Val" width="874" height="931" loading="lazy">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">ORIGINAL ARTIST</span><span class="bookable-tag mono">BOOKABLE</span><span class="format-tag mono">ORIGINALS + COVERS</span></div>
           <h3>Angel Val</h3>
-        </div>
-        <p>Rock and country artist.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-          <li>Recording &amp; production</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Angel%20Val&amp;body=Artist%3A%20Angel%20Val%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Angel Val</a>
-          <a href="https://angelval.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Rock · Country · Acoustic</p>
+          <p class="artist-bio">Rock and country artist.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Angel%20Val&amp;body=Artist%3A%20Angel%20Val%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Angel Val</a>
+            <a href="https://angelval.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
       <div class="artist-card" data-type="original-artist" data-genre="country christian pop acoustic">
-        <div>
+        <img class="artist-photo" src="/assets/artists/sarah-holdyn.jpg" alt="Sarah Holdyn" width="1200" height="1200" loading="lazy">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">ORIGINAL ARTIST</span><span class="bookable-tag mono">BOOKABLE</span><span class="format-tag mono">ORIGINALS + COVERS</span></div>
           <h3>Sarah Holdyn</h3>
-        </div>
-        <p>Country, Christian, and pop artist.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-          <li>Live performance support</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Sarah%20Holdyn&amp;body=Artist%3A%20Sarah%20Holdyn%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Sarah Holdyn</a>
-          <a href="https://sarahholdyn.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Country · Christian · Pop</p>
+          <p class="artist-bio">Country, Christian, and pop artist.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Sarah%20Holdyn&amp;body=Artist%3A%20Sarah%20Holdyn%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Sarah Holdyn</a>
+            <a href="https://sarahholdyn.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
       <div class="artist-card" data-type="original-artist" data-genre="country pop rock acoustic">
-        <div>
+        <img class="artist-photo" src="/assets/artists/jayda-laine.jpg" alt="Jayda Laine" width="960" height="957" loading="lazy">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">ORIGINAL ARTIST</span><span class="bookable-tag mono">BOOKABLE</span><span class="format-tag mono">ORIGINALS + COVERS</span></div>
           <h3>Jayda Laine</h3>
-        </div>
-        <p>Country, pop, and rock artist.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Jayda%20Laine&amp;body=Artist%3A%20Jayda%20Laine%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Jayda Laine</a>
-          <a href="https://jaydalaineofficial.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Country · Pop · Rock</p>
+          <p class="artist-bio">Country, pop, and rock artist.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Jayda%20Laine&amp;body=Artist%3A%20Jayda%20Laine%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Jayda Laine</a>
+            <a href="https://jaydalaineofficial.com" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
       <div class="artist-card" data-type="original-artist" data-genre="pop acoustic">
-        <div>
+        <img class="artist-photo" src="/assets/artists/joe-jacobs.jpg" alt="Joe Jacobs" width="1200" height="1199" loading="lazy">
+        <div class="artist-body">
           <div class="artist-tags"><span class="artist-tag mono">ORIGINAL ARTIST</span><span class="bookable-tag mono">BOOKABLE</span><span class="format-tag mono">ORIGINALS + COVERS</span></div>
           <h3>Joe Jacobs</h3>
-        </div>
-        <p>Pop and acoustic artist.</p>
-        <ul class="feature-list">
-          <li>Local &amp; regional booking</li>
-          <li>Release &amp; streaming strategy</li>
-          <li>Social media &amp; promotion</li>
-          <li>Website development</li>
-        </ul>
-        <div class="card-actions">
-          <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Joe%20Jacobs&amp;body=Artist%3A%20Joe%20Jacobs%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Joe Jacobs</a>
-          <a href="https://www.joejacobsofficial.com/" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          <p class="artist-genre">Pop · Acoustic</p>
+          <p class="artist-bio">Pop and acoustic artist.</p>
+          <div class="card-actions">
+            <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry%3A%20Joe%20Jacobs&amp;body=Artist%3A%20Joe%20Jacobs%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Book Joe Jacobs</a>
+            <a href="https://www.joejacobsofficial.com/" class="btn" target="_blank" rel="noopener">Visit Site</a>
+          </div>
         </div>
       </div>
   </div>
   <p id="artist-filter-empty" class="wrap mono" style="display:none; color: var(--muted); padding-top: 8px;">No artists match that filter.</p>
 
-  <section class="wrap fade-section cta-band">
+  <section class="wrap fade-section cta-band" style="margin-top: 56px; border-top: 1px solid var(--line);">
     <p class="section-label mono">BOOKING A SHOW OR EVENT?</p>
     <a href="mailto:twincitiessoundco@gmail.com?subject=Booking%20inquiry&amp;body=Artist%28s%29%3A%20%0ADate%28s%29%3A%0AVenue%20/%20event%3A%0ACity%3A%0ASet%20length%3A%0ABudget%20/%20deal%3A%0A%0AAnything%20else%20we%20should%20know%3A%0A" class="btn btn-solid">Request a Booking</a>
-    <a href="/#contact" class="btn">Want Representation?</a>
+  </section>
+
+  <section id="representation" class="wrap fade-section section-intro">
+    <div class="section-label mono">02 / FOR ARTISTS</div>
+    <h2 class="section-title" style="margin-bottom: 16px;">Want representation?</h2>
+    <p class="hero-tag" style="margin-bottom: 0;">You make the music. We help build the machine behind it. Not every artist needs the same thing, so every plan is built around what you actually need.</p>
+  </section>
+  <div class="channels channels-3 fade-section">
+    <a href="/services/" class="channel" style="text-decoration:none; color:inherit;">
+      <span class="channel-num mono">CH.01</span>
+      <h3>Booking &amp; Touring</h3>
+      <ul class="feature-list">
+        <li>Local &amp; regional booking</li>
+        <li>Tour planning</li>
+        <li>Advance &amp; settlement</li>
+      </ul>
+    </a>
+    <a href="/services/" class="channel" style="text-decoration:none; color:inherit;">
+      <span class="channel-num mono">CH.02</span>
+      <h3>Brand &amp; Digital</h3>
+      <ul class="feature-list">
+        <li>Websites &amp; EPKs</li>
+        <li>Social media &amp; content</li>
+        <li>Release &amp; streaming strategy</li>
+      </ul>
+    </a>
+    <a href="/services/" class="channel" style="text-decoration:none; color:inherit;">
+      <span class="channel-num mono">CH.03</span>
+      <h3>Recording &amp; Live</h3>
+      <ul class="feature-list">
+        <li>Recording &amp; production</li>
+        <li>Session &amp; fill-in players</li>
+        <li>Live performance support</li>
+      </ul>
+    </a>
+  </div>
+
+  <section class="wrap fade-section">
+    <div class="section-label mono">HOW IT WORKS</div>
+    <ol class="steps">
+      <li>
+        <span class="step-num">01</span>
+        <span class="step-title mono">Send your music</span>
+        <span class="step-text">Links, a live clip, and where you've played.</span>
+      </li>
+      <li>
+        <span class="step-num">02</span>
+        <span class="step-title mono">We talk</span>
+        <span class="step-text">What you need, what you don't, and where you want to go.</span>
+      </li>
+      <li>
+        <span class="step-num">03</span>
+        <span class="step-title mono">Custom plan</span>
+        <span class="step-text">Retainer, project fee, or commission. Scoped to you.</span>
+      </li>
+    </ol>
+    <div class="hero-actions">
+      <a href="mailto:twincitiessoundco@gmail.com?subject=Representation%20inquiry&amp;body=Artist%20/%20band%20name%3A%0AGenre%3A%0AWhere%20you%27re%20based%3A%0AMusic%20links%3A%0ALive%20video%3A%0ARecent%20shows%3A%0AWhat%20you%20need%20help%20with%3A%0A" class="btn btn-solid">Apply for Representation</a>
+      <a href="/#contact" class="btn">Contact Us</a>
+    </div>
   </section>
 
   <div id="footer-placeholder"></div>

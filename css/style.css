@@ -832,3 +832,170 @@ html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
   }
   .cta-band .btn + .btn{ margin: 12px 0 0; }
 }
+
+/* ---------- ARTISTS: two doors (venues vs. artists) ---------- */
+.door-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 8px;
+}
+@media (max-width: 700px){
+  .door-grid{ grid-template-columns: 1fr; }
+}
+.door{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--cream);
+  transition: border-color 0.15s ease;
+}
+.door:hover{ border-color: var(--signal); }
+.door-eyebrow, .door-link{
+  font-size: 0.72rem;
+  color: var(--signal);
+}
+.door-title{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  font-size: clamp(1.8rem, 3.4vw, 2.2rem);
+  line-height: 1.05;
+}
+.door-text{
+  color: var(--muted);
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+.door-link{ margin-top: 6px; }
+
+/* ---------- ARTISTS: photo roster cards ---------- */
+.roster-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px){
+  .roster-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px){
+  .roster-grid{ grid-template-columns: 1fr; }
+}
+.roster-grid .artist-card{
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+.artist-photo{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center top;
+  border-bottom: 1px solid var(--line);
+  background: var(--line);
+}
+.artist-body{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 22px 24px;
+  flex-grow: 1;
+}
+.artist-tags{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.artist-genre{
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.artist-bio{
+  margin: 0;
+  color: var(--cream);
+  font-size: 0.95rem;
+}
+.artist-body .card-actions{ margin-top: auto; padding-top: 6px; }
+@media (max-width: 640px){
+  .roster-grid .artist-card{ padding: 0; }
+}
+
+/* ---------- ARTISTS: representation ---------- */
+.channels-3{ grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px){
+  .channels-3{ grid-template-columns: 1fr; }
+}
+.channel .feature-list li{ font-size: 0.92rem; padding: 10px 0 10px 22px; }
+.steps{
+  list-style: none;
+  margin: 18px 0 40px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+@media (max-width: 700px){
+  .steps{ grid-template-columns: 1fr; gap: 22px; }
+}
+.steps li{ display: flex; flex-direction: column; gap: 8px; }
+.step-num{
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--brass);
+}
+.step-title{ font-size: 0.78rem; color: var(--cream); }
+.step-text{ color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- HOME: now booking strip ---------- */
+.roster-strip-head{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.roster-strip-head .section-title{ margin-bottom: 0; }
+.live-label{ color: var(--signal); }
+.roster-strip{
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 900px){
+  .roster-strip{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 480px){
+  .roster-strip{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.roster-thumb{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--cream);
+}
+.roster-thumb img{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--line);
+  transition: border-color 0.15s ease;
+}
+.roster-thumb:hover img{ border-color: var(--signal); }
+.roster-thumb-name{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  font-size: 1.15rem;
+  line-height: 1.1;
+}
+.roster-thumb-genre{ color: var(--muted); font-size: 0.78rem; }
