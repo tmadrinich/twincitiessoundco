@@ -781,3 +781,33 @@ html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
   font-family: var(--font-body);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- BOOKABLE ARTISTS ---------- */
+.artist-tags{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.bookable-tag{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--signal);
+}
+.bookable-tag::before{
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+}
+.card-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+.cta-band .btn + .btn{ margin-left: 10px; }
