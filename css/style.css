@@ -804,6 +804,15 @@ html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
   border-radius: 50%;
   background: var(--signal);
 }
+/* Show format: originals, covers, or a hybrid set */
+.format-tag{
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--signal);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  line-height: 1.2;
+}
 .card-actions{
   display: flex;
   flex-wrap: wrap;
