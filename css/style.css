@@ -102,7 +102,7 @@ header{
   padding: 14px 0;
 }
 /* Below the 1120px max width, keep side gutters so the header doesn't touch the screen edge */
-@media (min-width: 801px) and (max-width: 1175px){
+@media (min-width: 641px) and (max-width: 1175px){
   .nav{ padding-left: 28px; padding-right: 28px; }
 }
 .brand{
@@ -126,6 +126,7 @@ nav ul{
   font-size: 0.85rem;
 }
 header nav ul li a{
+  white-space: nowrap;
   text-decoration: none;
   color: var(--muted);
   transition: color 0.15s ease;
@@ -180,7 +181,7 @@ header nav ul li a:hover{ color: var(--cream); }
 .nav-toggle:checked ~ .nav-toggle-label span:nth-child(2){ opacity: 0; }
 .nav-toggle:checked ~ .nav-toggle-label span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 800px){
+@media (max-width: 960px){
   .nav{
     display: flex;
     align-items: center;
@@ -999,3 +1000,23 @@ html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
   line-height: 1.1;
 }
 .roster-thumb-genre{ color: var(--muted); font-size: 0.78rem; }
+
+/* ---------- WEB DESIGN: packages + recent work ---------- */
+.package{ gap: 14px; }
+.package-featured{ box-shadow: inset 0 3px 0 var(--brass); }
+.price{
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--brass);
+  font-variant-numeric: tabular-nums;
+}
+.package-build{
+  font-size: 0.7rem;
+  color: var(--signal);
+}
+.package .feature-list{ margin: 4px 0; }
+.work-strip{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 480px){
+  .work-strip{ grid-template-columns: 1fr; }
+}
