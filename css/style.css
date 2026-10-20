@@ -1030,3 +1030,19 @@ html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
   .channels-5{ grid-template-columns: 1fr; }
 }
 .channels-5 .channel h3{ font-size: 1.35rem; }
+
+/* ---------- ABOUT: founder ---------- */
+.founder-grid{ grid-template-columns: 1fr 1fr; align-items: start; }
+@media (max-width: 800px){ .founder-grid{ grid-template-columns: 1fr; } }
+.founder-photo{ margin: 0; }
+.founder-photo img{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 45% 30%;
+  border: 1px solid var(--line);
+}
+p.founder-role.mono{ color: var(--signal); font-size: 0.75rem; letter-spacing: 0.1em; margin: 0 0 20px; }
+.founder-specs{ margin-top: 48px; }
