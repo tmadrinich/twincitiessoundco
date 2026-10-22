@@ -42,6 +42,40 @@ async function loadPartial(placeholderId, url) {
 loadPartial('header-placeholder', '/partials/header.html');
 loadPartial('footer-placeholder', '/partials/footer.html');
 
+// ---------- Desktop member menu (hamburger for signed-in links) ----------
+// The header loads after this script runs, so listen on the document.
+(function () {
+  function parts() {
+    var btn = document.querySelector('.member-menu-btn');
+    return btn ? { btn: btn, panel: document.getElementById(btn.getAttribute('aria-controls')) } : null;
+  }
+  function setOpen(open, focusBtn) {
+    var p = parts();
+    if (!p || !p.panel) return;
+    p.btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    p.panel.hidden = !open;
+    if (!open && focusBtn) p.btn.focus();
+  }
+  function isOpen() {
+    var p = parts();
+    return !!(p && p.btn.getAttribute('aria-expanded') === 'true');
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.member-menu-btn')) { setOpen(!isOpen()); return; }
+    if (isOpen() && !e.target.closest('.member-menu-panel')) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen()) setOpen(false, true);
+  });
+  document.addEventListener('focusin', function (e) {
+    if (isOpen() && !e.target.closest('.member-menu')) setOpen(false);
+  });
+  // Close it if the window shrinks to the mobile menu while it's open.
+  window.matchMedia('(max-width: 960px)').addEventListener('change', function (mq) {
+    if (mq.matches) setOpen(false);
+  });
+})();
+
 // ---------- Fade in sections as they scroll into view ----------
 (function () {
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

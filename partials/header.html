@@ -26,12 +26,18 @@
     </nav>
     <div class="nav-actions">
       <a href="/login/" class="nav-login" data-guest-only>Log in</a>
-      <a href="/bookings/" class="nav-login nav-wide" data-auth-only>Bookings</a>
-      <a href="/production-tracker/" class="nav-login nav-wide" data-auth-only data-admin-only>Production Tracker</a>
-      <a href="/settlement/" class="nav-login nav-wide" data-auth-only data-admin-only>Settlement</a>
-      <a href="/login/?signout=1" class="nav-login nav-wide" data-auth-only>Sign out</a>
-      <a href="/login/" class="nav-login nav-narrow" data-auth-only>Members</a>
       <a href="/#contact" class="btn nav-cta">Contact</a>
+      <div class="member-menu" data-auth-only>
+        <button type="button" class="member-menu-btn" aria-label="Member menu" aria-expanded="false" aria-controls="member-menu-panel">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="member-menu-panel" id="member-menu-panel" hidden>
+          <li><a href="/bookings/">Bookings</a></li>
+          <li data-admin-only><a href="/production-tracker/">Production Tracker</a></li>
+          <li data-admin-only><a href="/settlement/">Settlement</a></li>
+          <li class="member-menu-signout"><a href="/login/?signout=1">Sign out</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </header>
