@@ -149,8 +149,9 @@ header nav ul li a:hover{ color: var(--cream); }
 .nav-login:hover{ color: var(--cream); }
 /* Signed-in links live in a desktop hamburger so they never crowd the centered logo.
    Below 960px the whole .nav-actions row hides and the mobile menu carries these links. */
-@media (min-width: 961px){ .nav{ position: relative; } }
-.member-menu{ display: flex; align-items: center; }
+/* Stretch to the full header row so the panel can hang from the header's bottom line */
+.nav-actions{ align-self: stretch; }
+.member-menu{ position: relative; align-self: stretch; display: flex; align-items: center; }
 .member-menu-btn{
   display: flex;
   flex-direction: column;
@@ -176,7 +177,7 @@ header nav ul li a:hover{ color: var(--cream); }
 .member-menu-btn[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 .member-menu-panel{
   position: absolute;
-  top: calc(100% + 1px);
+  top: calc(100% + 15px); /* .nav's 14px bottom padding + header border */
   right: 0;
   z-index: 11;
   min-width: 220px;
@@ -200,10 +201,6 @@ header nav ul li a:hover{ color: var(--cream); }
 }
 .member-menu-panel a:hover,
 .member-menu-panel a[aria-current="page"]{ color: var(--cream); }
-/* Match the side gutter .nav adds below its 1120px max width */
-@media (min-width: 641px) and (max-width: 1175px){
-  .member-menu-panel{ right: 28px; }
-}
 .nav-mobile-only{ display: none; }
 
 /* ---------- MOBILE NAV (hamburger) ---------- */
