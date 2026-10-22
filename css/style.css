@@ -149,7 +149,7 @@ header nav ul li a:hover{ color: var(--cream); }
 .nav-login:hover{ color: var(--cream); }
 /* Signed-in links: full set on wide screens, a single "Members" hub link on mid-size screens */
 .nav-narrow{ display: none; }
-@media (max-width: 1199px){
+@media (max-width: 1359px){
   .nav-wide{ display: none; }
   .nav-narrow{ display: inline; }
 }
@@ -764,6 +764,9 @@ html:not([data-auth="in"]) [data-auth-only]{ display: none !important; }
 html[data-auth="in"] [data-guest-only]{ display: none !important; }
 /* Protected pages stay hidden until the session is confirmed (or the visitor is sent to /login/). */
 html[data-require-auth]:not([data-auth="in"]) main{ visibility: hidden; }
+/* Staff-only links and pages: hidden from artist logins (set by js/auth.js, cached for public pages). */
+html:not([data-role="admin"]) [data-admin-only]{ display: none !important; }
+html[data-require-admin]:not([data-role="admin"]) main{ visibility: hidden; }
 
 /* ---------- 2026 BRAND TYPE (kept last so it wins) ---------- */
 /* Labels, tags, buttons, figures: Archivo SemiBold caps, wide tracking */

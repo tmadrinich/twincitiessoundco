@@ -16,6 +16,17 @@
     }
   } catch (e) { /* storage blocked: treat as signed out */ }
   root.setAttribute('data-auth', signedIn ? 'in' : 'out');
+  if (signedIn) {
+    try { var role = localStorage.getItem('tcsc-role'); if (role) root.setAttribute('data-role', role); } catch (e) {}
+  }
+})();
+
+// Invite and password-reset links can land on any page; send them to /login/ to finish.
+(function () {
+  if (location.pathname.indexOf('/login/') === 0) return;
+  if (/[#&]access_token=/.test(location.hash) && /[#&]type=(invite|recovery)\b/.test(location.hash)) {
+    location.replace('/login/' + location.hash);
+  }
 })();
 
 // ---------- Load shared header/footer partials ----------

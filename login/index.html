@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=20261020b">
+<link rel="stylesheet" href="/css/style.css?v=20261022a">
 <style>
   .login-wrap{ max-width: 420px; }
   .login-wrap .section-title{ margin-bottom: 12px; }
@@ -36,6 +36,7 @@
   .login-links{ display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
   .login-links .btn{ text-align: center; }
   [hidden]{ display: none !important; }
+  .login-forgot{ background: none; border: 0; padding: 0; cursor: pointer; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -49,7 +50,7 @@
     <!-- Signed out -->
     <div id="login-view" hidden>
       <h1 class="section-title">Log in</h1>
-      <p class="login-sub">Access the production tracker and show settlement.</p>
+      <p class="login-sub">Bookings, production and settlement for TCSC artists and staff.</p>
       <form id="login-form" novalidate>
         <div class="field">
           <label for="login-email">Email</label>
@@ -62,6 +63,25 @@
         <button type="submit" class="btn btn-solid" id="login-submit">Log in</button>
         <div id="login-status" class="status-message" role="status" aria-live="polite"></div>
       </form>
+      <button type="button" class="nav-login login-forgot" id="forgot-btn">Forgot password?</button>
+    </div>
+
+    <!-- Set a password (invite or reset link) -->
+    <div id="password-view" hidden>
+      <h1 class="section-title" id="password-title">Set your password</h1>
+      <p class="login-sub" id="password-sub">Choose a password for your Twin Cities Sound Co. login.</p>
+      <form id="password-form" novalidate>
+        <div class="field">
+          <label for="new-password">New password</label>
+          <input type="password" id="new-password" name="new-password" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="field">
+          <label for="confirm-password">Confirm password</label>
+          <input type="password" id="confirm-password" name="confirm-password" autocomplete="new-password" minlength="8" required>
+        </div>
+        <button type="submit" class="btn btn-solid" id="password-submit">Save password</button>
+        <div id="password-status" class="status-message" role="status" aria-live="polite"></div>
+      </form>
     </div>
 
     <!-- Signed in -->
@@ -69,8 +89,9 @@
       <h1 class="section-title">You're logged in</h1>
       <p class="login-sub" id="member-email"></p>
       <div class="login-links">
-        <a class="btn btn-solid" href="/production-tracker/">Production Tracker</a>
-        <a class="btn" href="/settlement/">Settlement</a>
+        <a class="btn btn-solid" href="/bookings/">Bookings</a>
+        <a class="btn" href="/production-tracker/" data-admin-only>Production Tracker</a>
+        <a class="btn" href="/settlement/" data-admin-only>Settlement</a>
       </div>
       <a href="/login/?signout=1" class="nav-login">Sign out</a>
     </div>
@@ -88,32 +109,49 @@
   var auth = window.tcscAuth;
   var params = new URLSearchParams(location.search);
   var loginView = document.getElementById('login-view');
+  var passwordView = document.getElementById('password-view');
   var memberView = document.getElementById('member-view');
   var form = document.getElementById('login-form');
   var email = document.getElementById('login-email');
   var pass = document.getElementById('login-password');
   var submit = document.getElementById('login-submit');
   var status = document.getElementById('login-status');
+  var pForm = document.getElementById('password-form');
+  var pNew = document.getElementById('new-password');
+  var pConfirm = document.getElementById('confirm-password');
+  var pSubmit = document.getElementById('password-submit');
+  var pStatus = document.getElementById('password-status');
 
   // Only follow same-site paths after login (blocks open redirects like //evil.com)
-  function nextPath() {
+  function nextPath(role) {
     var n = params.get('next') || '';
-    return /^\/(?!\/)[^\\]*$/.test(n) ? n : '/production-tracker/';
+    if (/^\/(?!\/)[^\\]*$/.test(n)) return n;
+    return auth.homeFor(role);
   }
-  function say(msg, kind) {
-    status.textContent = msg || '';
-    status.className = 'status-message' + (kind ? ' ' + kind : '');
+  function say(box, msg, kind) {
+    box.textContent = msg || '';
+    box.className = 'status-message' + (kind ? ' ' + kind : '');
   }
-  function showLogin() { memberView.hidden = true; loginView.hidden = false; email.focus(); }
+  function only(view) {
+    [loginView, passwordView, memberView].forEach(function (v) { v.hidden = v !== view; });
+  }
+  function showLogin() { only(loginView); email.focus(); }
   function showMember(session) {
-    loginView.hidden = true;
-    memberView.hidden = false;
+    only(memberView);
     document.getElementById('member-email').textContent = session.user.email;
+  }
+  function showPassword(type) {
+    only(passwordView);
+    if (type === 'recovery') {
+      document.getElementById('password-title').textContent = 'Reset your password';
+      document.getElementById('password-sub').textContent = 'Choose a new password for your login.';
+    }
+    pNew.focus();
   }
 
   if (!auth || !auth.sb) {
     showLogin();
-    say('Login is unavailable right now. Try again in a minute.', 'error');
+    say(status, 'Login is unavailable right now. Try again in a minute.', 'error');
     submit.disabled = true;
     return;
   }
@@ -121,23 +159,58 @@
   if (params.has('signout')) {
     auth.sb.auth.signOut({ scope: 'local' }).then(function () {
       document.documentElement.setAttribute('data-auth', 'out');
+      document.documentElement.removeAttribute('data-role');
+      try { localStorage.removeItem('tcsc-role'); } catch (e) {}
       history.replaceState(null, '', '/login/');
       showLogin();
-      say('You’re signed out.', 'success');
+      say(status, 'You\u2019re signed out.', 'success');
     });
   } else {
-    auth.ready.then(function (session) { if (session) showMember(session); else showLogin(); });
+    auth.ready.then(function (session) {
+      if (session && auth.linkType) { showPassword(auth.linkType); return; }
+      if (session) showMember(session); else showLogin();
+    });
   }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!email.value.trim() || !pass.value) { say('Enter your email and password.', 'error'); return; }
+    if (!email.value.trim() || !pass.value) { say(status, 'Enter your email and password.', 'error'); return; }
     submit.disabled = true;
-    say('Logging in…');
+    say(status, 'Logging in\u2026');
     auth.sb.auth.signInWithPassword({ email: email.value.trim(), password: pass.value }).then(function (r) {
-      submit.disabled = false;
-      if (r.error) { say(r.error.message === 'Invalid login credentials' ? 'That email and password don’t match.' : r.error.message, 'error'); return; }
-      location.replace(nextPath());
+      if (r.error) {
+        submit.disabled = false;
+        say(status, r.error.message === 'Invalid login credentials' ? 'That email and password don\u2019t match.' : r.error.message, 'error');
+        return;
+      }
+      auth.sb.from('profiles').select('role').eq('user_id', r.data.user.id).maybeSingle().then(function (p) {
+        var role = (p && p.data && p.data.role) || 'none';
+        try { localStorage.setItem('tcsc-role', role); } catch (e2) {}
+        location.replace(nextPath(role));
+      });
+    });
+  });
+
+  document.getElementById('forgot-btn').addEventListener('click', function () {
+    var addr = email.value.trim();
+    if (!addr) { say(status, 'Enter your email above, then tap Forgot password.', 'error'); email.focus(); return; }
+    say(status, 'Sending\u2026');
+    auth.sb.auth.resetPasswordForEmail(addr, { redirectTo: location.origin + '/login/' }).then(function (r) {
+      if (r.error) { say(status, r.error.message, 'error'); return; }
+      say(status, 'If that email has a login, a reset link is on its way.', 'success');
+    });
+  });
+
+  pForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (pNew.value.length < 8) { say(pStatus, 'Use at least 8 characters.', 'error'); return; }
+    if (pNew.value !== pConfirm.value) { say(pStatus, 'The passwords don\u2019t match.', 'error'); return; }
+    pSubmit.disabled = true;
+    say(pStatus, 'Saving\u2026');
+    auth.sb.auth.updateUser({ password: pNew.value }).then(function (r) {
+      if (r.error) { pSubmit.disabled = false; say(pStatus, r.error.message, 'error'); return; }
+      say(pStatus, 'Password saved.', 'success');
+      auth.profile.then(function (p) { location.replace(auth.homeFor(p && p.role)); });
     });
   });
 })();
