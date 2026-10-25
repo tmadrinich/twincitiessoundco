@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-require-auth data-require-admin>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Team — Twin Cities Sound Company</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Twin Cities Sound Company">
+<meta property="og:title" content="Team — Twin Cities Sound Company">
+<meta property="og:description" content="Twin Cities Sound Company — label, recording, promotion, booking, and digital. One team, one plan.">
+<meta property="og:url" content="https://twincitiessoundco.com/team/">
+<meta property="og:image" content="https://twincitiessoundco.com/assets/brand/tcsc-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Twin Cities Sound Co. logo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://twincitiessoundco.com/assets/brand/tcsc-share.png">
+<link rel="icon" type="image/png" href="/assets/tcsc-icon.png">
+<link rel="apple-touch-icon" href="/assets/app/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#121212">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="TCSC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css?v=20261022c">
+<style>
+  /* Team-only styles. Colors, type and buttons come from /css/style.css (2026 brand guide). */
+  :root{ --alert: #C0645A; --ok: #7FB08A; }
+  [hidden]{ display: none !important; }
+  .tm-main{ padding: 56px 0 88px; border-bottom: 1px solid var(--line); }
+  .tm-wrap{ max-width: 816px; }
+  .tm-label, .tm-field label, .tm-msg, .tm-pill, .tm-table th{
+    font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-variant-numeric: tabular-nums;
+  }
+  .tm-label{ font-size: 0.72rem; color: var(--signal); }
+  .tm-title{ font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--cream); margin-top: 8px; }
+  .tm-sub{ color: var(--muted); margin: 10px 0 32px; max-width: 62ch; }
+  .tm-h2{ font-size: 1.6rem; color: var(--cream); margin: 0 0 14px; }
+
+  .tm-panel{ border: 1px solid var(--line); background: var(--surface); padding: 22px 24px; margin-bottom: 36px; }
+  .tm-form{ display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 14px 16px; align-items: end; }
+  .tm-field{ display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .tm-field label{ font-size: 0.62rem; color: var(--muted); }
+  .tm-field input, .tm-field select{
+    background: var(--bg); border: 1px solid var(--line); color: var(--cream); font-family: var(--font-body);
+    font-size: 16px; padding: 9px 12px; border-radius: 4px; width: 100%; min-width: 0; color-scheme: dark;
+  }
+  .tm-field input:focus, .tm-field select:focus{ border-color: var(--signal); outline: none; }
+  .tm-bar{ grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .tm-hint{ grid-column: 1 / -1; color: var(--muted); font-size: 0.88rem; margin: 0; }
+
+  .tm-msg{ font-size: 0.68rem; color: var(--muted); }
+  .tm-msg.error{ color: var(--alert); } .tm-msg.ok{ color: var(--signal); }
+
+  .tm-tablewrap{ overflow-x: auto; border: 1px solid var(--line); }
+  .tm-table{ width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+  .tm-table th{ font-size: 0.62rem; color: var(--muted); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+  .tm-table td{ padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--cream); vertical-align: top; font-variant-numeric: tabular-nums; }
+  .tm-table tr:last-child td{ border-bottom: 0; }
+  .tm-table td.muted{ color: var(--muted); }
+  .tm-email{ overflow-wrap: anywhere; }
+  .tm-pill{ display: inline-block; font-size: 0.6rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+  .tm-pill.active{ border-color: var(--ok); color: var(--ok); }
+  .tm-pill.invited{ border-color: var(--signal); color: var(--signal); }
+
+  @media (max-width: 720px){
+    .tm-form{ grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 480px){
+    .tm-main{ padding: 40px 0 64px; }
+    .tm-panel{ padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+  <div class="tm-main">
+    <div class="wrap tm-wrap">
+      <div class="tm-label">Staff only</div>
+      <h1 class="tm-title">Team &amp; logins</h1>
+      <p class="tm-sub">Invite artists and staff to the site. Artists see only their own Bookings page. Staff see everything.</p>
+
+      <section class="tm-panel" aria-labelledby="tm-invite-h">
+        <h2 class="tm-h2" id="tm-invite-h">Invite someone</h2>
+        <form class="tm-form" id="tm-form" novalidate>
+          <div class="tm-field">
+            <label for="tm-email">Email</label>
+            <input id="tm-email" type="email" autocomplete="off" required placeholder="name@example.com">
+          </div>
+          <div class="tm-field">
+            <label for="tm-role">Access</label>
+            <select id="tm-role">
+              <option value="artist">Artist</option>
+              <option value="admin">Staff</option>
+            </select>
+          </div>
+          <div class="tm-field" id="tm-artist-wrap">
+            <label for="tm-artist">Artist</label>
+            <input id="tm-artist" list="tm-artists" autocomplete="off" placeholder="Matches the name on Bookings">
+            <datalist id="tm-artists"></datalist>
+          </div>
+          <p class="tm-hint" id="tm-hint">They'll get an email with a link to set a password, then land on the login page.</p>
+          <div class="tm-bar">
+            <button class="btn btn-solid" type="submit" id="tm-send">Send invite</button>
+            <span class="tm-msg" id="tm-status" role="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section aria-labelledby="tm-list-h">
+        <h2 class="tm-h2" id="tm-list-h">Who has access</h2>
+        <div id="tm-list"><div class="tm-msg">Loading…</div></div>
+      </section>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js?v=20261022c" defer></script>
+<script>
+(function () {
+  'use strict';
+  var sb = null;
+  var list = document.getElementById('tm-list');
+  var form = document.getElementById('tm-form');
+  var emailIn = document.getElementById('tm-email');
+  var roleIn = document.getElementById('tm-role');
+  var artistIn = document.getElementById('tm-artist');
+  var artistWrap = document.getElementById('tm-artist-wrap');
+  var sendBtn = document.getElementById('tm-send');
+  var status = document.getElementById('tm-status');
+
+  function el(tag, props, kids) {
+    var n = document.createElement(tag);
+    if (props) Object.keys(props).forEach(function (k) {
+      if (k === 'text') n.textContent = props[k];
+      else if (k === 'class') n.className = props[k];
+      else n.setAttribute(k, props[k]);
+    });
+    (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function fmt(s) { return s ? new Date(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'; }
+  function setStatus(text, kind) { status.textContent = text; status.className = 'tm-msg' + (kind ? ' ' + kind : ''); }
+
+  async function call(payload) {
+    var r = await sb.functions.invoke('invite-user', { body: payload });
+    if (r.error) {
+      var msg = r.error.message;
+      try { var j = await r.error.context.json(); if (j && j.error) msg = j.error; } catch (e) {}
+      throw new Error(msg);
+    }
+    return r.data;
+  }
+
+  function renderList(rows) {
+    while (list.firstChild) list.removeChild(list.firstChild);
+    if (!rows.length) { list.appendChild(el('div', { class: 'tm-msg', text: 'No logins yet.' })); return; }
+    var order = { admin: 0, artist: 1 };
+    rows.sort(function (a, b) {
+      return (order[a.role] ?? 2) - (order[b.role] ?? 2) || String(a.artist_name || a.email).localeCompare(String(b.artist_name || b.email));
+    });
+    var tbody = el('tbody');
+    rows.forEach(function (r) {
+      var label = r.status === 'active' ? 'Active' : r.status === 'invited' ? 'Invite sent' : 'Not invited';
+      tbody.appendChild(el('tr', null, [
+        el('td', { class: 'tm-email', text: r.email || '' }),
+        el('td', { text: r.role === 'admin' ? 'Staff' : r.role === 'artist' ? 'Artist' : 'No access' }),
+        el('td', { class: r.artist_name ? '' : 'muted', text: r.artist_name || (r.role === 'admin' ? 'All' : '—') }),
+        el('td', null, [el('span', { class: 'tm-pill ' + (r.status === 'active' ? 'active' : r.status === 'invited' ? 'invited' : ''), text: label })]),
+        el('td', { class: 'muted', text: r.last_sign_in_at ? fmt(r.last_sign_in_at) : '—' })
+      ]));
+    });
+    list.appendChild(el('div', { class: 'tm-tablewrap' }, [el('table', { class: 'tm-table' }, [
+      el('thead', null, [el('tr', null, ['Email', 'Access', 'Artist', 'Status', 'Last sign-in'].map(function (h) { return el('th', { scope: 'col', text: h }); }))]),
+      tbody
+    ])]));
+  }
+
+  async function loadList() {
+    try { renderList((await call({ action: 'list' })).rows || []); }
+    catch (e) { while (list.firstChild) list.removeChild(list.firstChild); list.appendChild(el('div', { class: 'tm-msg error', text: e.message })); }
+  }
+
+  async function loadArtists() {
+    var r = await sb.from('bookings').select('artist');
+    var names = (r.data || []).map(function (x) { return x.artist; }).filter(function (a, i, arr) { return a && arr.indexOf(a) === i; }).sort();
+    var dl = document.getElementById('tm-artists');
+    names.forEach(function (n) { dl.appendChild(el('option', { value: n })); });
+  }
+
+  roleIn.addEventListener('change', function () { artistWrap.hidden = roleIn.value !== 'artist'; });
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var email = emailIn.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('Enter a valid email address.', 'error'); emailIn.focus(); return; }
+    if (roleIn.value === 'artist' && !artistIn.value.trim()) { setStatus('Choose which artist this login is for.', 'error'); artistIn.focus(); return; }
+    sendBtn.disabled = true; setStatus('Sending…');
+    try {
+      var res = await call({ action: 'invite', email: email, role: roleIn.value, artist_name: artistIn.value.trim() });
+      setStatus(res.message || 'Invite sent.', 'ok');
+      form.reset(); artistWrap.hidden = false;
+      loadList();
+    } catch (err) { setStatus(err.message, 'error'); }
+    finally { sendBtn.disabled = false; }
+  });
+
+  var auth = window.tcscAuth;
+  if (!auth || !auth.sb) { list.textContent = 'Could not connect. Refresh to try again.'; return; }
+  sb = auth.sb;
+  auth.profile.then(function (p) {
+    if (!p || p.role !== 'admin') return;
+    loadArtists();
+    loadList();
+  });
+})();
+</script>
+</body>
+</html>
