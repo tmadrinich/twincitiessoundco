@@ -19,6 +19,21 @@
   var linkMatch = location.hash.match(/[#&]type=(invite|recovery)\b/);
   var linkType = linkMatch ? linkMatch[1] : null;
 
+  // An expired or already-used email link comes back with an error instead of a token
+  // (e.g. #error=access_denied&error_code=otp_expired). Catch it so /login/ can explain it.
+  var linkError = null;
+  (function () {
+    var p = new URLSearchParams(location.hash.replace(/^#/, '') + '&' + location.search.replace(/^\?/, ''));
+    var code = p.get('error_code') || p.get('error');
+    if (code) {
+      linkError = code;
+      // Drop the error from the address bar so a refresh shows a clean login page.
+      var q = new URLSearchParams(location.search); q.delete('error'); q.delete('error_code'); q.delete('error_description');
+      var qs = q.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    }
+  })();
+
   function loginUrl() {
     return '/login/?next=' + encodeURIComponent(location.pathname + location.search + location.hash);
   }
@@ -29,7 +44,7 @@
 
   if (!window.supabase) {
     console.error('Supabase library failed to load.');
-    window.tcscAuth = { sb: null, ready: Promise.resolve(null), profile: Promise.resolve(null), loginUrl: loginUrl, homeFor: homeFor, linkType: linkType };
+    window.tcscAuth = { sb: null, ready: Promise.resolve(null), profile: Promise.resolve(null), loginUrl: loginUrl, homeFor: homeFor, linkType: linkType, linkError: linkError };
     return;
   }
 
@@ -66,7 +81,7 @@
   });
 
   window.tcscAuth = {
-    sb: sb, ready: ready, profile: profile, loginUrl: loginUrl, homeFor: homeFor,
+    sb: sb, ready: ready, profile: profile, loginUrl: loginUrl, homeFor: homeFor, linkError: linkError,
     get linkType() { return linkType; }
   };
 })();
