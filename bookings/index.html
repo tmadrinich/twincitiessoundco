@@ -63,6 +63,16 @@
   .bk-spend-row .l{ font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6rem; color: var(--muted); }
   .bk-spend-row small{ display: block; font-size: 0.78rem; color: var(--muted); }
 
+  /* Status filter */
+  .bk-filter{ display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+  .bk-chip{ font-size: 0.64rem; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .bk-chip .c{ margin-left: 6px; opacity: 0.7; }
+  .bk-chip:hover:not(:disabled){ color: var(--cream); border-color: var(--signal); }
+  .bk-chip:focus-visible{ outline: 2px solid var(--signal); outline-offset: 2px; }
+  .bk-chip[aria-pressed="true"]{ background: var(--brass); border-color: var(--brass); color: var(--cream); }
+  .bk-chip[aria-pressed="true"] .c{ opacity: 1; }
+  .bk-chip:disabled{ opacity: 0.35; cursor: default; }
+
   .bk-group{ margin-bottom: 36px; }
   .bk-group h2{ font-size: 1.6rem; color: var(--cream); margin-bottom: 4px; display: flex; align-items: baseline; gap: 10px; }
   .bk-group h2 .n{ font-size: 0.72rem; color: var(--muted); }
@@ -139,6 +149,8 @@
     .bk-main{ padding: 40px 0 64px; }
     .bk-card{ padding: 16px 16px 14px; }
     .bk-facts{ grid-template-columns: minmax(0, 1fr); }
+    .bk-filter{ flex-wrap: nowrap; overflow-x: auto; margin-left: -20px; margin-right: -20px; padding: 0 20px 4px; scrollbar-width: none; }
+    .bk-filter::-webkit-scrollbar{ display: none; }
     .bk-cform{ flex-direction: column; align-items: stretch; }
   }
 </style>
@@ -181,6 +193,8 @@
   var sb = null, me = null, isAdmin = false;
   var bookings = [], notes = {}, paid = {}, comments = {}, artists = [], artist = null;
   var open = { comments: {}, edit: {} };
+  var filter = 'all';
+  try { filter = localStorage.getItem('tcsc-bookings-filter') || 'all'; } catch (e) {}
 
   // ---- Helpers ----
   function el(tag, props, kids) {
@@ -287,16 +301,53 @@
       app.appendChild(el('div', { class: 'bk-empty', text: isAdmin ? 'No bookings for this artist yet. Add the first one above.' : 'Nothing here yet. We’ll add opportunities as we line them up.' }));
       return;
     }
-    GROUPS.forEach(function (g) {
-      if (g.adminOnly && !isAdmin) return;
-      var list = rows.filter(function (b) { return g.match.indexOf(b.status) !== -1; }).sort(sortByDeadline);
-      if (!list.length) return;
+    var bar = el('div', { class: 'bk-filter', role: 'group', 'aria-label': 'Filter by status' });
+    var list = el('div', { id: 'bk-list' });
+    app.appendChild(bar);
+    app.appendChild(list);
+    drawList(rows, bar, list);
+  }
+
+  // ---- Status filter ----
+  function groupRows(rows, g) {
+    return rows.filter(function (b) { return g.match.indexOf(b.status) !== -1; }).sort(sortByDeadline);
+  }
+  function setFilter(key) {
+    filter = key;
+    try { localStorage.setItem('tcsc-bookings-filter', key); } catch (e) {}
+  }
+
+  function drawList(rows, bar, list) {
+    var groups = GROUPS.filter(function (g) { return !g.adminOnly || isAdmin; });
+    var counts = {};
+    groups.forEach(function (g) { counts[g.key] = groupRows(rows, g).length; });
+    // A saved filter with nothing in it for this artist falls back to All.
+    if (filter !== 'all' && !counts[filter]) filter = 'all';
+
+    clear(bar);
+    function chip(key, label, n) {
+      var b = el('button', { class: 'bk-chip', type: 'button', 'aria-pressed': String(filter === key), disabled: n === 0 ? 'disabled' : null }, [label, el('span', { class: 'c', text: String(n) })]);
+      b.addEventListener('click', function () {
+        if (filter === key) return;
+        setFilter(key);
+        drawList(visible(), bar, list);
+      });
+      return b;
+    }
+    bar.appendChild(chip('all', 'All', rows.length));
+    groups.forEach(function (g) { bar.appendChild(chip(g.key, g.title, counts[g.key])); });
+
+    clear(list);
+    groups.forEach(function (g) {
+      if (filter !== 'all' && g.key !== filter) return;
+      var items = groupRows(rows, g);
+      if (!items.length) return;
       var sec = el('section', { class: 'bk-group', 'aria-label': g.title, style: 'padding:0;border:0' }, [
-        el('h2', {}, [g.title, el('span', { class: 'n', text: String(list.length) })]),
+        el('h2', {}, [g.title, el('span', { class: 'n', text: String(items.length) })]),
         g.lede ? el('p', { class: 'lede', text: g.lede }) : null
       ]);
-      list.forEach(function (b) { sec.appendChild(card(b)); });
-      app.appendChild(sec);
+      items.forEach(function (b) { sec.appendChild(card(b)); });
+      list.appendChild(sec);
     });
   }
 
