@@ -52,6 +52,17 @@
   .bk-stat .l{ font-size: 0.64rem; color: var(--muted); }
   .bk-stat.attn .n{ color: var(--signal); }
 
+  /* Staff-only submission spend strip */
+  .bk-spend{ border: 1px solid var(--line); border-top: 2px solid var(--brass); background: var(--surface); padding: 14px 18px 16px; margin: -16px 0 32px; }
+  .bk-spend-head{ display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .bk-spend-head .bk-label{ font-size: 0.64rem; }
+  .bk-spend-head .bk-msg{ font-size: 0.6rem; }
+  .bk-spend-row{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .bk-spend-row .n{ font-family: var(--font-display); font-size: 1.6rem; line-height: 1.1; color: var(--cream); font-variant-numeric: tabular-nums; }
+  .bk-spend-row .n.brass{ color: var(--signal); }
+  .bk-spend-row .l{ font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6rem; color: var(--muted); }
+  .bk-spend-row small{ display: block; font-size: 0.78rem; color: var(--muted); }
+
   .bk-group{ margin-bottom: 36px; }
   .bk-group h2{ font-size: 1.6rem; color: var(--cream); margin-bottom: 4px; display: flex; align-items: baseline; gap: 10px; }
   .bk-group h2 .n{ font-size: 0.72rem; color: var(--muted); }
@@ -120,6 +131,7 @@
 
   @media (max-width: 720px){
     .bk-stats{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bk-spend-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .bk-facts{ grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     .bk-edit{ grid-template-columns: minmax(0, 1fr); }
   }
@@ -167,7 +179,7 @@
 
   var app = document.getElementById('app');
   var sb = null, me = null, isAdmin = false;
-  var bookings = [], notes = {}, comments = {}, artists = [], artist = null;
+  var bookings = [], notes = {}, paid = {}, comments = {}, artists = [], artist = null;
   var open = { comments: {}, edit: {} };
 
   // ---- Helpers ----
@@ -228,8 +240,12 @@
     if (isAdmin) {
       var saved = null; try { saved = localStorage.getItem('tcsc-bookings-artist'); } catch (e) {}
       artist = artists.indexOf(saved) !== -1 ? saved : (artists[0] || null);
-      var n = await sb.from('booking_notes').select('booking_id, note');
-      notes = {}; (n.data || []).forEach(function (x) { notes[x.booking_id] = x.note || ''; });
+      var n = await sb.from('booking_notes').select('booking_id, note, paid');
+      notes = {}; paid = {};
+      (n.data || []).forEach(function (x) {
+        if (x.note) notes[x.booking_id] = x.note;
+        if (x.paid !== null && x.paid !== undefined) paid[x.booking_id] = Number(x.paid);
+      });
     } else {
       artist = me.artistName;
     }
@@ -264,6 +280,7 @@
     app.appendChild(top);
 
     app.appendChild(stats(rows));
+    if (isAdmin) app.appendChild(spend(rows));
     if (isAdmin) app.appendChild(addForm());
 
     if (!rows.length) {
@@ -299,6 +316,37 @@
     ]);
   }
 
+  // ---- Staff-only: submission spend ----
+  function money(n) { return '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  // First dollar figure in the fee text, e.g. "$25 non-resident fee" -> 25. Free/blank/TBD -> 0.
+  function feeEstimate(fee) { var m = /\$\s?(\d+(?:\.\d{1,2})?)/.exec(fee || ''); return m ? Number(m[1]) : 0; }
+  function sum(list, fn) { return list.reduce(function (t, b) { return t + fn(b); }, 0); }
+
+  function spend(rows) {
+    var paidOf = function (b) { return paid[b.id] || 0; };
+    var allPaid = bookings.filter(function (b) { return paid[b.id] > 0; });
+    var artistPaid = rows.filter(function (b) { return paid[b.id] > 0; });
+    function ahead(list) { return list.filter(function (b) { return (b.status === 'To do' || b.status === 'Waiting on you') && !(paid[b.id] > 0) && feeEstimate(b.fee) > 0; }); }
+    var dueArtist = ahead(rows), dueAll = ahead(bookings);
+    var est = function (b) { return feeEstimate(b.fee); };
+    function cell(n, label, sub, brass) {
+      return el('div', {}, [el('div', { class: 'n' + (brass ? ' brass' : ''), text: n }), el('div', { class: 'l', text: label }), sub ? el('small', { text: sub }) : null]);
+    }
+    function aheadSub(list) { return list.length ? list.length + ' up-next fee' + (list.length === 1 ? '' : 's') + ' · est.' : 'Nothing due'; }
+    return el('section', { class: 'bk-spend', 'aria-label': 'Submission spend', style: 'padding:14px 18px 16px' }, [
+      el('div', { class: 'bk-spend-head' }, [
+        el('div', { class: 'bk-label', text: 'Submission spend · Staff only' }),
+        el('div', { class: 'bk-msg', text: 'Set “Paid” in Edit when you pay a fee' })
+      ]),
+      el('div', { class: 'bk-spend-row' }, [
+        cell(money(sum(allPaid, paidOf)), 'Spent · all artists', allPaid.length + (allPaid.length === 1 ? ' paid submission' : ' paid submissions'), true),
+        cell(money(sum(artistPaid, paidOf)), 'Spent · ' + (artist || 'artist'), artistPaid.length + ' paid'),
+        cell(money(sum(dueArtist, est)), 'Ahead · ' + (artist || 'artist'), aheadSub(dueArtist)),
+        cell(money(sum(dueAll, est)), 'Ahead · all artists', aheadSub(dueAll))
+      ])
+    ]);
+  }
+
   function card(b) {
     var d = daysLeft(b.deadline);
     var urgent = isOpen(b) && d !== null && d >= 0 && d <= 7;
@@ -331,7 +379,13 @@
       el('div', {}, [el('span', { class: 'k', text: 'Billing' }), el('div', { class: 'v', text: b.billing || '—' })])
     ]));
     if (b.artist_note) c.appendChild(el('p', { class: 'bk-note', text: b.artist_note }));
-    if (isAdmin && notes[b.id]) c.appendChild(el('div', { class: 'bk-internal' }, [el('b', { text: 'Internal' }), notes[b.id]]));
+    if (isAdmin && (notes[b.id] || paid[b.id] > 0)) {
+      c.appendChild(el('div', { class: 'bk-internal' }, [
+        el('b', { text: 'Internal' }),
+        paid[b.id] > 0 ? 'Paid ' + money(paid[b.id]) + (notes[b.id] ? ' · ' : '') : null,
+        notes[b.id] || null
+      ]));
+    }
 
     // Actions
     var list = comments[b.id] || [];
@@ -427,13 +481,22 @@
       billing: input(prefix + 'billing', 'Billing', b.billing || 'Full band', null, BILLING),
       link: input(prefix + 'link', 'Link', b.link, 'url'),
       artist_note: input(prefix + 'anote', 'Note to artist (they see this)', b.artist_note, 'textarea'),
+      paid: input(prefix + 'paid', 'Paid $ (staff only)', b.id && paid[b.id] !== undefined ? String(paid[b.id]) : '', 'number'),
       internal: input(prefix + 'inote', 'Internal note (staff only)', b.id ? notes[b.id] : '', 'textarea')
     };
   }
   function layout(f) {
+    f.paid.node.setAttribute('min', '0'); f.paid.node.setAttribute('step', '0.01'); f.paid.node.setAttribute('inputmode', 'decimal'); f.paid.node.setAttribute('placeholder', '0');
     return [f.event.wrap, f.type.wrap, f.location.wrap, f.event_dates.wrap, f.status.wrap, f.billing.wrap,
-      f.deadline.wrap, f.deadline_note.wrap, f.method.wrap, f.fee.wrap, f.submitted.wrap, f.link.wrap,
+      f.deadline.wrap, f.deadline_note.wrap, f.method.wrap, f.fee.wrap, f.submitted.wrap, f.paid.wrap, spanned(f.link.wrap),
       spanned(f.artist_note.wrap), spanned(f.internal.wrap)];
+  }
+  function readPaid(f) {
+    var v = f.paid.node.value.trim();
+    if (v === '') return { value: null };
+    var n = Number(v);
+    if (!isFinite(n) || n < 0) return { error: 'Paid must be a dollar amount, 0 or more.' };
+    return { value: Math.round(n * 100) / 100 };
   }
   function spanned(n) { n.classList.add('span'); return n; }
   function collect(f) {
@@ -448,11 +511,23 @@
     }
     return rec;
   }
-  async function saveNote(id, text) {
+  // Internal note and paid amount share the staff-only booking_notes row.
+  async function saveNote(id, text, amount) {
     text = (text || '').trim();
-    if (!text) { if (notes[id]) { await sb.from('booking_notes').delete().eq('booking_id', id); delete notes[id]; } return null; }
-    var r = await sb.from('booking_notes').upsert({ booking_id: id, note: text, updated_at: new Date().toISOString() });
-    if (!r.error) notes[id] = text;
+    var hasPaid = amount !== null && amount !== undefined;
+    if (!text && !hasPaid) {
+      if (notes[id] || paid[id] !== undefined) {
+        var d = await sb.from('booking_notes').delete().eq('booking_id', id);
+        if (d.error) return d.error;
+        delete notes[id]; delete paid[id];
+      }
+      return null;
+    }
+    var r = await sb.from('booking_notes').upsert({ booking_id: id, note: text || null, paid: hasPaid ? amount : null, updated_at: new Date().toISOString() });
+    if (!r.error) {
+      if (text) notes[id] = text; else delete notes[id];
+      if (hasPaid) paid[id] = amount; else delete paid[id];
+    }
     return r.error;
   }
 
@@ -465,9 +540,11 @@
     save.addEventListener('click', async function () {
       var rec = collect(f);
       if (!rec.event) { status.textContent = 'Add a name.'; status.className = 'bk-msg error'; return; }
+      var pd = readPaid(f);
+      if (pd.error) { status.textContent = pd.error; status.className = 'bk-msg error'; return; }
       save.disabled = true; status.textContent = 'Saving…'; status.className = 'bk-msg';
       var r = await sb.from('bookings').update(rec).eq('id', b.id).select().single();
-      var nErr = r.error ? null : await saveNote(b.id, f.internal.node.value);
+      var nErr = r.error ? null : await saveNote(b.id, f.internal.node.value, pd.value);
       save.disabled = false;
       if (r.error || nErr) { status.textContent = (r.error || nErr).message; status.className = 'bk-msg error'; return; }
       bookings = bookings.map(function (x) { return x.id === b.id ? r.data : x; });
@@ -497,9 +574,11 @@
       var rec = collect(f);
       rec.artist = who.node.value.trim();
       if (!rec.event || !rec.artist) { status.textContent = 'Add the artist and a name.'; status.className = 'bk-msg error'; return; }
+      var pd = readPaid(f);
+      if (pd.error) { status.textContent = pd.error; status.className = 'bk-msg error'; return; }
       add.disabled = true; status.textContent = 'Adding…'; status.className = 'bk-msg';
       var r = await sb.from('bookings').insert(rec).select().single();
-      var nErr = r.error ? null : await saveNote(r.data.id, f.internal.node.value);
+      var nErr = r.error ? null : await saveNote(r.data.id, f.internal.node.value, pd.value);
       add.disabled = false;
       if (r.error || nErr) { status.textContent = (r.error || nErr).message; status.className = 'bk-msg error'; return; }
       bookings.push(r.data);
